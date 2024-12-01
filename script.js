@@ -1,5 +1,4 @@
 const toggleButton = document.getElementById('toggleButton');
-
 let idToWork;
 let currentMonth = new Date().getMonth() + 1;
 let currentYear = new Date().getFullYear();
@@ -118,7 +117,7 @@ async function saveNewTransaction(e) {
     allTransactions.push(transaction);
     await setAndGetFromLocalStorage(allTransactions, id);
     fillMonthHTML()
-    // calculate()
+    calcMoney()
     
 }
 
@@ -155,6 +154,7 @@ function calcOtherPos(i) {
 let uebertragLastMonth;
 
 function calcLastPos() {
+    uebertragLastMonth = 0;
     let plusOrMinusAbove = transactionsToShow[transactionsToShow.length-1].plusMinus;
     let lastAmount = Number(transactionsToShow[transactionsToShow.length-1].amount);
     let lastSum = Number((document.getElementById(`current_sum${transactionsToShow[transactionsToShow.length-1].showMoreID}`).innerHTML).slice(0, -2))

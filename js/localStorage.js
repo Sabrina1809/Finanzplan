@@ -3,9 +3,10 @@ let allKeys = [];
 let id;
 let transactionsToShow = [];
 
-async function getFromLocalStorage() {
+async function init() {
     await getTransactionsFromStorage();
     await getIDFromStorage();
+    showCurrentMonth()
 }
 
 async function setAndGetFromLocalStorage(allTransactions, id) {

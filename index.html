@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <title>Meine Finanzen</title>
 </head>
-<body onload="getFromLocalStorage(); showCurrentMonth()">
+<body onload="init()">
     <div id="overview_ctn" class="ctn">
         <div class="month_overview">
             <div class="header_app">
@@ -184,7 +184,7 @@
                 </div>
                 <div class="footer">
                     <span class="saldo_text">Saldo</span>
-                    <span id="saldo_amount" class="saldo_amount">3720,00 €</span>
+                    <span id="saldo_amount" class="saldo_amount"></span>
                 </div>
             </div>
         </div>

@@ -1,5 +1,7 @@
 const firebase_URL = 'https://finanz-app-ba04e-default-rtdb.europe-west1.firebasedatabase.app/'
-
+let allTransactions;
+let allKeys = [];
+let id;
 
 async function getIdAndData(pathData='') {
     let responseData = await fetch(firebase_URL + pathData + ".json");
@@ -14,7 +16,24 @@ async function getIdAndData(pathData='') {
     } 
 }
 
-
+function keyForAllTransactions() {
+    transactionsToShow = [];
+    allKeys = [];
+    allKeys = Object.keys(allTransactions)
+    console.log(allKeys)
+    for (let i = 0; i < allKeys.length; i++) {
+        let key = allKeys[i]
+        if (allTransactions[key].frequenzy == "monatlich" || (Number(allTransactions[key].year) == yearToShow && Number(allTransactions[key].month) == monthToShow)) {
+            transactionsToShow.push(allTransactions[key])
+        }
+    }
+    transactionsToShow.sort((a, b) => {
+        const dayDifference = Number(a.day) - Number(b.day);
+        if (dayDifference !== 0) {
+            return dayDifference;}
+        return String(a.id).localeCompare(String(b.id));
+    });
+}
 
 async function postData(path="", data={}) {
     let response = await fetch(firebase_URL + path + ".json", {

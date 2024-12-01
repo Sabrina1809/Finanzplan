@@ -1,24 +1,20 @@
 const toggleButton = document.getElementById('toggleButton');
-let transactionsToShow = [];
+
 let idToWork;
 let currentMonth = new Date().getMonth() + 1;
 let currentYear = new Date().getFullYear();
 let monthToShow = Number(currentMonth);
 let yearToShow = Number(currentYear);
 
-function checkUebertrag() {
-    let uebertrag = document.getElementById("transfer_amount").innerHTML;
+function changeUebertrag() {
+    let uebertrag = document.getElementById("transfer_amount");
     if(toggleButton.classList.contains("active")) {
-        uebertrag = 0;
-        document.getElementById('transfer_amount').innerHTML = uebertrag;
-        document.getElementById(`current_sum${transactionsToShow[0].showMoreID}`).innerHTML = uebertrag
+        document.getElementById("transfer_amount_input").disabled = true;
+        document.getElementById("transfer_amount_input").value = 0;
     } else {
-        uebertrag = 500;
-        if (transactionsToShow.length > 0) {
-            document.getElementById('transfer_amount').innerHTML = uebertrag;
-            document.getElementById(`current_sum${transactionsToShow[0].showMoreID}`).innerHTML = uebertrag
-        }
+        document.getElementById("transfer_amount_input").disabled = false;
     }
+    calcMoney()
 }
 
 async function showCurrentMonth() {
@@ -30,6 +26,7 @@ async function showCurrentMonth() {
         document.getElementById("pos_month").innerHTML = "Füge deine erste Transaktion mit dem + Button hinzu."
     } else {
         fillMonthHTML()
+        changeUebertrag()
         calcMoney()
     }
 }
@@ -44,10 +41,10 @@ async function showNextMonth(plusMinus1) {
         yearToShow = yearToShow - 1
     }
     document.getElementById("current_month").innerHTML = monthToShow + " / " + yearToShow;
-    // await getIdAndData(pathData='');
     await getTransactionsFromStorage();
     await getIDFromStorage();
     fillMonthHTML()
+    calcMoney()
 }
 
 function openMenuMore(id, e) {
@@ -72,6 +69,31 @@ function closeForm() {
     resetForm()
     document.getElementById("overview_ctn").style.display = "block";
     document.getElementById("overlay_ctn").style.display = "none";
+}
+
+function editTransaction() {
+    document.getElementById("overview_ctn").style.display = "none";
+    document.getElementById("overlay_ctn").style.display = "block";
+    closeMenuMore(idToWork)
+    let transactionToEdit = checkTransactionToEdit(idToWork);
+    console.log(transactionToEdit);
+    document.getElementById("date").value = `${transactionToEdit.year}-${transactionToEdit.month}-${transactionToEdit.day}`
+    document.getElementById("type_option").value = transactionToEdit.type;
+    document.getElementById("frequenzy_option").value = transactionToEdit.frequenzy;
+    document.getElementById("title_input").value = transactionToEdit.title;
+    document.getElementById("amount").value = transactionToEdit.amount;
+
+}
+
+function checkTransactionToEdit(idToWork) {
+    let transaction;
+    for (let i = 0; i < allTransactions.length; i++) {
+        if (allTransactions[i].showMoreID == idToWork) {
+            return transaction = allTransactions[i]
+        }
+    }
+    document.querySelector(".button").addEventListener("onclick", deleteTransaction)
+    return transaction
 }
 
 async function saveNewTransaction(e) {
@@ -100,13 +122,6 @@ async function saveNewTransaction(e) {
     
 }
 
-async function setAndGetFromLocalStorage(allTransactions, id) {
-    localStorage.setItem("transactionsFinanzplan", JSON.stringify(allTransactions));
-    localStorage.setItem("idFinanzplan", JSON.stringify(id));
-    await getTransactionsFromStorage();
-    await getIDFromStorage();
-}
-
 function checkplusMinus() {
     if (document.getElementById("type_option").value == "Einnahme") {
         return "+"
@@ -116,56 +131,74 @@ function checkplusMinus() {
 }
 
 function calcMoney() {
-    document.getElementById(`current_sum${transactionsToShow[0].showMoreID}`).innerHTML = 0;
-    for (let i = 0; i < transactionsToShow.length; i++) {
-        let idForCalc = transactionsToShow[i].showMoreID;
-        let plusOrMinus = transactionsToShow[i].plusMinus;
-        console.log(plusOrMinus);
-        let currentSum = Number(document.getElementById(`current_sum${idForCalc}`).innerHTML);
-        console.log(currentSum);
-        let amount = Number(transactionsToShow[i].amount);
-        console.log(amount);
-        
-        let newSum = Number(currentSum + plusOrMinus + amount)
-        newSum = Number(newSum)
-        console.log(newSum);
-        
+    calcPosOne();
+    for (let i = 1; i < transactionsToShow.length; i++) {
+        calcOtherPos(i);
     }
+    calcLastPos();
 }
 
-// function checkUebertrag(uebertrag, operator) {
-//     if (uebertrag == 0) {
-//         document.getElementById(`current_sum${transactionsToShow[0].showMoreID}`).innerHTML = `${uebertrag} €`
-//     } else {
-//         let nextSum;
-//         if (operator == '+') {
-//             nextSum = Number(document.getElementById(`current_sum${transactionsToShow[0].showMoreID}`).innerHTML) + Number(transactionsToShow[0].amount)
-//         } else {
-//             nextSum = Number(document.getElementById(`current_sum${transactionsToShow[0].showMoreID}`).innerHTML) - Number(transactionsToShow[0].amount)
-//         }
-//         document.getElementById(`current_sum${transactionsToShow[0].showMoreID}`).innerHTML = `${Number(nextSum)} €`
-//     }
-// }
+function calcPosOne() {
+    let uebertragLastMonth = document.getElementById("transfer_amount_input").value;
+    let idFromIndexOne = transactionsToShow[0].showMoreID;
+    document.getElementById(`current_sum${idFromIndexOne}`).innerHTML = uebertragLastMonth + " €";
+}
+
+function calcOtherPos(i) {
+    let plusOrMinusAbove = transactionsToShow[i-1].plusMinus;
+    let lastAmount = Number(transactionsToShow[i-1].amount);
+    let lastSum = (document.getElementById(`current_sum${transactionsToShow[i-1].showMoreID}`).innerHTML).slice(0, -2)
+    let newSum = calc(plusOrMinusAbove, lastSum, lastAmount); 
+    document.getElementById(`current_sum${transactionsToShow[i].showMoreID}`).innerHTML = newSum + " €";
+}
+
+let uebertragLastMonth;
+
+function calcLastPos() {
+    let plusOrMinusAbove = transactionsToShow[transactionsToShow.length-1].plusMinus;
+    let lastAmount = Number(transactionsToShow[transactionsToShow.length-1].amount);
+    let lastSum = Number((document.getElementById(`current_sum${transactionsToShow[transactionsToShow.length-1].showMoreID}`).innerHTML).slice(0, -2))
+    let newSum = calc(plusOrMinusAbove, lastSum, lastAmount); 
+    document.getElementById(`saldo_amount`).innerHTML = newSum + " €";
+    return uebertragLastMonth = newSum;
+}
+
+function calc(plusOrMinusAbove, lastSum, lastAmount) {
+    let sum;
+    if (plusOrMinusAbove == "+") {
+        sum = lastSum + lastAmount;
+    } else {
+        sum = lastSum - lastAmount;
+    }
+    return sum
+}
 
 function fillMonthHTML() {
     document.getElementById("pos_month").innerHTML = "";    
     for (let i = 0; i < transactionsToShow.length; i++) {
         document.getElementById("pos_month").innerHTML += `
             <div class="single_pos">
-            <span class="day">${transactionsToShow[i].day}</span>
-            <span id="current_sum${transactionsToShow[i].showMoreID}" class="current_sum"></span>
-            <span class="title">${transactionsToShow[i].title}</span>
-            <span class="amount">${transactionsToShow[i].plusMinus} ${transactionsToShow[i].amount} €</span>
-            <span onclick="openMenuMore(${transactionsToShow[i].showMoreID}, event)" class="show_more button">&#x22EF;</span>
-            <div id="show_more${transactionsToShow[i].showMoreID}"  class="more">
-                <div class="edit button">
-                    <img src="./img/icons8-bleistift-64.png" alt="Bleistift">
-                </div>
-                <div class="delete button">
-                    <img onclick="deleteTransaction()" src="./img/icons8-müll-64.png" alt="Mülleimer">
-                </div>
-                <div onclick="closeMenuMore(${transactionsToShow[i].showMoreID})" class="close_menu button">
-                    <img src="./img/icons8-ausgang-80.png" alt="Mülleimer">
+                <div class="single_pos_part_day_title">
+                    <span class="day">${transactionsToShow[i].day}</span>
+                    <span id="current_sum${transactionsToShow[i].showMoreID}" class="current_sum"></span>
+                    <span class="amount">${transactionsToShow[i].plusMinus} ${transactionsToShow[i].amount} €</span>
+
+                    <span class="title">${transactionsToShow[i].title}</span>
+   
+                 </div>
+                <div class="single_pos_part_amount_more">
+                 
+                    <span onclick="openMenuMore(${transactionsToShow[i].showMoreID}, event)" class="show_more button">&#x22EF;</span>
+                    <div id="show_more${transactionsToShow[i].showMoreID}" class="more">
+                    <div class="edit button">
+                        <img onclick="editTransaction()" src="./img/icons8-bleistift-64.png" alt="Bleistift">
+                    </div>
+                    <div class="delete button">
+                        <img onclick="deleteTransaction()" src="./img/icons8-müll-64.png" alt="Mülleimer">
+                    </div>
+                    <div onclick="closeMenuMore(${transactionsToShow[i].showMoreID})" class="close_menu button">
+                        <img src="./img/icons8-ausgang-80.png" alt="Mülleimer">
+                    </div>
                 </div>
             </div>
         </div>

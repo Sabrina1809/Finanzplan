@@ -9,6 +9,7 @@ body {
     margin: 0 auto;
     text-align: center;
     width: 100%;
+    min-width: 320px;
     min-height: 100vh;
     background-color: rgb(42, 37, 99);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -20,6 +21,7 @@ body {
     height: 30px;
     font-size: 21px;
     border-radius: 5px;
+    display: inline-block;
     background-color: white;
     color: rgba(0, 0, 0, 0.5);
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.5) inset;
@@ -92,9 +94,14 @@ body {
                 & .single_pos {
                     display: flex;
                     flex-direction: row;
+                    justify-content: space-between;
                     align-items: center;
                     padding: 5px;
                     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+                    & .single_pos_part_day_title{
+                        display: flex;
+                        justify-content: space-between;
+                    }
                     & .day {
                         border-radius: 5px;
                         width: 50px;
@@ -102,17 +109,17 @@ body {
                     & .current_sum {
                         color: rgb(144, 144, 144);
                         font-size: 12px;
-                        width: 80px;
-                        margin-right: 20px;
+                        width: 65px;
+                        /* margin-right: 20px; */
                         text-align: right;
                     }
                     & .title {
-                        width: 250px;
-                        margin-right: 20px;
+                        width: 180px;
+                        /* margin-right: 20px; */
                         text-align: left;
                     }
                     & .amount {
-                        width: 100px;
+                        width: 75px;
                         text-align: right;
                         margin-right: 18px;
                     }
@@ -160,33 +167,46 @@ body {
                 }
                 & .transfer {
                     display: flex;
-                    justify-content: left;
+                    justify-content: space-between;
                     margin-bottom: 20px;
+                    padding-bottom: 10px;
                     border-bottom: 1px solid rgba(198, 198, 198, 0.2);
+                    & .transfer_on_off {
+                        display: flex;
+                        gap: 20px;
+                        flex-direction: row-reverse;
+                        align-items: center;
+                    }
                     & .transfer_title {
                         text-align: left;
                         color: gray;
-                        width: 250px;
-                        margin-right: 20px;
+                        /* width: 250px; */
+                        /* margin-right: 20px; */
+                    }
+                    & #transfer_amount_input {
+                        width: 70px;
+                        height: 30px;
+                        border: none;
+                        outline: none;
+                        border-radius: 5px;
+                        padding: 0 5px;
+                        color: rgba(0, 0, 0, 0.5);
+                        box-shadow: 0 0 2px rgba(0, 0, 0, 0.5) inset;
                     }
                     & .transfer_amount {
                         text-align: right;
                         color: gray;
-                        width: 100px;
-                        margin-right: 20px;
+                        /* width: 100px; */
+                        margin-right: 15px;
                     }
                 }
             }
             & .footer {
-                width: 400px;
-                width: 50%;
-                margin-left: 185px;
                 display: flex;
-                justify-content: space-between;
-                & .saldo_amount {
-                    width: 100px;
-                    margin-right: 17px;
-                }
+                justify-content: end;
+                align-items: center;
+                gap: 20px;
+                margin-right: 20%;
             }
         }
     }
@@ -375,6 +395,7 @@ body {
         }
     }
 }
+
 #freq_one_time {
     color: rgba(0, 0, 0, 1);
     box-shadow: 0 0 2px rgba(0, 0, 0, 1) inset;
@@ -397,7 +418,7 @@ body {
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.5) inset;
     align-items: center;
     font-size: 12px;
-    margin-right: 80px;
+    /* margin-right: 80px; */
     & span {
         color: black;
         font-weight: 500;
@@ -424,3 +445,97 @@ body {
     font-weight: 300;
 }
 
+@media(max-width: 650px) {
+    body {
+        font-size: 12px;
+    }
+    .ctn {
+        width: 95%;
+        & .month_overview {
+            & .add_new_pos {
+                right: 10%;
+            }
+            & .header_app {
+                align-items: center;
+                justify-content: left;
+                margin-left: 2.5%;
+                & h1 {
+                    font-size: 18px;
+                }
+            }
+            & .month {
+                & .header {
+                    width: 100%;
+                }
+                & .main {
+                    width: 95%;
+                    & .transfer {
+                        margin-bottom: 10px;
+                        & .transfer_amount {
+                            margin-right: 0;
+                        }
+                    }
+                    & .single_pos {
+
+                        & .single_pos_part_day_title {
+                            display: flex;
+                            flex-wrap: wrap;
+                            justify-content: unset;
+                            /* flex-direction: column; */
+                        }
+                        & .title {
+                            /* border: 1px solid black; */
+                            width: 150px;
+                            margin-right: 0;
+                         
+                        }
+                        & .amount {
+                            /* border: 1px solid black; */
+                            margin-right: 5px;
+                        }
+                        & .day {
+                            /* border: 1px solid black; */
+                            width: 35px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .current_sum {
+        display: none;
+    }
+}
+
+@media(max-width: 450px) {
+    .ctn {
+        & .month_overview {
+            & .month {
+                & .header {
+                    padding: 0 10px;
+                }
+                & .main {
+                    & .transfer {
+                        & .transfer_on_off {
+                            gap: 10px;
+                        }
+                        & #transfer_amount_input {
+                            width: 55px;
+                        }
+                    }
+                    & .single_pos {
+                        & .amount {
+                            text-align: left;
+                            margin-left: 5px;
+                        }
+                        & .title {
+                            width: 133px;
+                            margin-top: 5px;
+                            margin-left: 40px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

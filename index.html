@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <title>Meine Finanzen</title>
 </head>
-<body onload="showCurrentMonth()">
+<body onload="getFromLocalStorage(); showCurrentMonth()">
     <div id="overview_ctn" class="ctn">
         <div class="month_overview">
             <div class="header_app">
@@ -22,12 +22,17 @@
                     <span onclick="showNextMonth(1)" class="next_month button">&#x290D;</span>
                 </div>
                 <div class="main">
-                    <div class="single_pos transfer">
-                        <div onclick="classList.toggle('active'); checkUebertrag()" id="toggleButton" class="toggle-btn active"><span>OFF</span><span>ON</span>
-                            <div class="toggle-circle"></div>
+                    <div class="transfer">
+                        <div class="transfer_on_off">
+                            <span class="transfer_title">Übertrag</span>
+                            <div onclick="classList.toggle('active'); changeUebertrag()" id="toggleButton" class="toggle-btn active"><span>OFF</span><span>ON</span>
+                                <div class="toggle-circle"></div>
+                            </div>
                         </div>
-                        <span class="transfer_title">Übertrag</span>
-                        <span id="transfer_amount" class="transfer_amount">0</span>
+                        <div class="transfer_amount_input">
+                            <input onkeydown="if(event.key === 'Enter') calcMoney()" type="number" name="transfer_amount_input" id="transfer_amount_input" value="0">
+                            <span id="transfer_amount" class="transfer_amount"> €</span>
+                        </div>
                     </div>
                     <div id="pos_month" class="pos_month">
                         <!-- Füge deine erste Transaktion mit dem + Button hinzu. -->

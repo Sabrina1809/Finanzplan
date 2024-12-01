@@ -1,6 +1,19 @@
 let allTransactions;
 let allKeys = [];
 let id;
+let transactionsToShow = [];
+
+async function getFromLocalStorage() {
+    await getTransactionsFromStorage();
+    await getIDFromStorage();
+}
+
+async function setAndGetFromLocalStorage(allTransactions, id) {
+    localStorage.setItem("transactionsFinanzplan", JSON.stringify(allTransactions));
+    localStorage.setItem("idFinanzplan", JSON.stringify(id));
+    await getTransactionsFromStorage();
+    await getIDFromStorage();
+}
 
 async function getTransactionsFromStorage() {
     let transactionsFromStorage = JSON.parse(localStorage.getItem("transactionsFinanzplan")) || [];
@@ -26,6 +39,7 @@ function checkTransactionsToShow() {
             return dayDifference;}
         return String(a.id).localeCompare(String(b.id));
     });
+    transactionsToShow = transactionsToShow
 }
 
 async function deleteTransaction() {
@@ -35,4 +49,5 @@ async function deleteTransaction() {
     await getIDFromStorage()
     closeMenuMore(idToWork)
     fillMonthHTML()
+    document.querySelector(".button").removeEventListener("onclick", deleteTransaction)
 }

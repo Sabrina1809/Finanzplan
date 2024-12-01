@@ -6,18 +6,31 @@ let currentYear = new Date().getFullYear();
 let monthToShow = Number(currentMonth);
 let yearToShow = Number(currentYear);
 
+function checkUebertrag() {
+    let uebertrag = document.getElementById("transfer_amount").innerHTML;
+    if(toggleButton.classList.contains("active")) {
+        uebertrag = 0;
+        document.getElementById('transfer_amount').innerHTML = uebertrag;
+        document.getElementById(`current_sum${transactionsToShow[0].showMoreID}`).innerHTML = uebertrag
+    } else {
+        uebertrag = 500;
+        if (transactionsToShow.length > 0) {
+            document.getElementById('transfer_amount').innerHTML = uebertrag;
+            document.getElementById(`current_sum${transactionsToShow[0].showMoreID}`).innerHTML = uebertrag
+        }
+    }
+}
+
 async function showCurrentMonth() {
-    await getIdAndData(pathData='')
+    await getTransactionsFromStorage();
+    await getIDFromStorage();
     document.getElementById("current_month").innerHTML = monthToShow + " / " + yearToShow;
     console.log(allTransactions)
-    if (allTransactions == undefined) {
-      
+    if (allTransactions.length == 0) {
         document.getElementById("pos_month").innerHTML = "Füge deine erste Transaktion mit dem + Button hinzu."
-       
     } else {
-        // console.log("else erreicht")
         fillMonthHTML()
-        calculate()
+        calcMoney()
     }
 }
 
@@ -31,7 +44,9 @@ async function showNextMonth(plusMinus1) {
         yearToShow = yearToShow - 1
     }
     document.getElementById("current_month").innerHTML = monthToShow + " / " + yearToShow;
-    await getIdAndData(pathData='');
+    // await getIdAndData(pathData='');
+    await getTransactionsFromStorage();
+    await getIDFromStorage();
     fillMonthHTML()
 }
 
@@ -61,7 +76,6 @@ function closeForm() {
 
 async function saveNewTransaction(e) {
     e.preventDefault()
-    // console.log(id);
     let date = document.getElementById("date").value;
     let [year, month, day] = date.split("-");
     let transaction = {
@@ -76,16 +90,21 @@ async function saveNewTransaction(e) {
         id: year+month+day+"-"+id,
         showMoreID: id
     }
-    // console.log(transaction)
     resetForm()
     closeForm()
-    id = Number(id) + 1
-    // console.log("nextID " + id)
-    await putID(path="id", id)
-    await postData(path="transactions", transaction);
-    await getIdAndData(pathData='')
+    id = Number(id) + 1;
+    allTransactions.push(transaction);
+    await setAndGetFromLocalStorage(allTransactions, id);
     fillMonthHTML()
-    calculate()
+    // calculate()
+    
+}
+
+async function setAndGetFromLocalStorage(allTransactions, id) {
+    localStorage.setItem("transactionsFinanzplan", JSON.stringify(allTransactions));
+    localStorage.setItem("idFinanzplan", JSON.stringify(id));
+    await getTransactionsFromStorage();
+    await getIDFromStorage();
 }
 
 function checkplusMinus() {
@@ -96,43 +115,21 @@ function checkplusMinus() {
     }
 }
 
-function calculate() {
-    console.log(transactionsToShow);
-    let uebertrag = 758;
-    let currentSum;
-    let nextSum;
+function calcMoney() {
+    document.getElementById(`current_sum${transactionsToShow[0].showMoreID}`).innerHTML = 0;
     for (let i = 0; i < transactionsToShow.length; i++) {
-        let operator = transactionsToShow[i].plusMinus;
-        let addOrSub = Number(transactionsToShow[i].amount);
-        if (i == 0) {
-            currentSum = uebertrag
-            document.getElementById(`current_sum${transactionsToShow[0].showMoreID}`).innerHTML = `${Number(uebertrag)} €`
-        } else {
-            currentSum = document.getElementById(`current_sum${Number(transactionsToShow[i - 1].showMoreID)}`).innerHTML;
-            currentSum = currentSum.slice(0, 2);
-            currentSum = Number(currentSum)
-            if (operator == '+') {
-                console.log(currentSum, typeof currentSum)
-                console.log(addOrSub, typeof addOrSub);
-                nextSum = currentSum + addOrSub
-                console.log(nextSum, typeof nextSum)
-            } else {
-                console.log(currentSum, typeof currentSum)
-                console.log(addOrSub, typeof addOrSub);
-                nextSum = currentSum - addOrSub
-                console.log(nextSum, typeof nextSum)
-            }
-        }
-      
-      
-        if (i < 0 && i < transactionsToShow.length - 1) {
-            document.getElementById(`current_sum${transactionsToShow[i].showMoreID}`).innerHTML = `${Number(nextSum)} €`
-        }
-        if (i == transactionsToShow.length - 1) {
-            document.getElementById("saldo_amount").innerHTML = `${Number(nextSum)} €`
-        } else {
-            document.getElementById(`current_sum${Number(transactionsToShow[i + 1].showMoreID)}`).innerHTML = `${Number(nextSum)} €`
-        }
+        let idForCalc = transactionsToShow[i].showMoreID;
+        let plusOrMinus = transactionsToShow[i].plusMinus;
+        console.log(plusOrMinus);
+        let currentSum = Number(document.getElementById(`current_sum${idForCalc}`).innerHTML);
+        console.log(currentSum);
+        let amount = Number(transactionsToShow[i].amount);
+        console.log(amount);
+        
+        let newSum = Number(currentSum + plusOrMinus + amount)
+        newSum = Number(newSum)
+        console.log(newSum);
+        
     }
 }
 
@@ -156,7 +153,7 @@ function fillMonthHTML() {
         document.getElementById("pos_month").innerHTML += `
             <div class="single_pos">
             <span class="day">${transactionsToShow[i].day}</span>
-            <span id="current_sum${transactionsToShow[i].showMoreID}" class="current_sum">xxx €</span>
+            <span id="current_sum${transactionsToShow[i].showMoreID}" class="current_sum"></span>
             <span class="title">${transactionsToShow[i].title}</span>
             <span class="amount">${transactionsToShow[i].plusMinus} ${transactionsToShow[i].amount} €</span>
             <span onclick="openMenuMore(${transactionsToShow[i].showMoreID}, event)" class="show_more button">&#x22EF;</span>
@@ -165,7 +162,7 @@ function fillMonthHTML() {
                     <img src="./img/icons8-bleistift-64.png" alt="Bleistift">
                 </div>
                 <div class="delete button">
-                    <img onclick="deleteData()" src="./img/icons8-müll-64.png" alt="Mülleimer">
+                    <img onclick="deleteTransaction()" src="./img/icons8-müll-64.png" alt="Mülleimer">
                 </div>
                 <div onclick="closeMenuMore(${transactionsToShow[i].showMoreID})" class="close_menu button">
                     <img src="./img/icons8-ausgang-80.png" alt="Mülleimer">
@@ -188,7 +185,6 @@ function checkTypeOfTransaktion() {
     let type;
     let einnahme = document.getElementById("type_einnahme");
     let ausgabe = document.getElementById("type_ausgabe");
-    // console.log(einnahme, ausgabe)
     if (einnahme.checked == true) {
         type = einnahme.value;
     } else {

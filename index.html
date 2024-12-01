@@ -23,11 +23,11 @@
                 </div>
                 <div class="main">
                     <div class="single_pos transfer">
-                        <div onclick="classList.toggle('active')" id="toggleButton" class="toggle-btn"><span>OFF</span><span>ON</span>
+                        <div onclick="classList.toggle('active'); checkUebertrag()" id="toggleButton" class="toggle-btn active"><span>OFF</span><span>ON</span>
                             <div class="toggle-circle"></div>
                         </div>
                         <span class="transfer_title">Übertrag</span>
-                        <span class="transfer_amount">873,54 €</span>
+                        <span id="transfer_amount" class="transfer_amount">0</span>
                     </div>
                     <div id="pos_month" class="pos_month">
                         <!-- Füge deine erste Transaktion mit dem + Button hinzu. -->
@@ -228,7 +228,7 @@
             </form>
         </div>
     </div>
-    <script src="./js/firebase.js"></script>
+    <script src="./js/localStorage.js"></script>
     <script src="./script.js"></script>
 </body>
 </html>

@@ -49,13 +49,19 @@ async function showNextMonth(plusMinus1) {
 function openMenuMore(id, e) {
     idToWork="";
     idToWork = id;
-    document.getElementById(`show_more${id}`).style.right = "55px";
+    document.getElementById(`show_more${id}`).style.width = "100%";
+    document.getElementById(`show_more${id}`).style.visibility = "visible";
     document.getElementById(`show_more${id}`).style.opacity = "1";
+    document.getElementById(`show_more_btn${id}`).style.width = "0px";
+    document.getElementById(`show_more_btn${id}`).style.opacity = "0";
 }
 
 function closeMenuMore(id) {
-    document.getElementById(`show_more${id}`).style.right = "380px";
+    document.getElementById(`show_more${id}`).style.width = "0px";
+    document.getElementById(`show_more${id}`).style.visibility = "hidden";
     document.getElementById(`show_more${id}`).style.opacity = "0";
+    document.getElementById(`show_more_btn${id}`).style.width = "30px";
+    document.getElementById(`show_more_btn${id}`).style.opacity = "1";
 }
 
 function openForm() {
@@ -182,26 +188,24 @@ function fillMonthHTML() {
                     <span class="day">${transactionsToShow[i].day}</span>
                     <span id="current_sum${transactionsToShow[i].showMoreID}" class="current_sum"></span>
                     <span class="amount">${transactionsToShow[i].plusMinus} ${transactionsToShow[i].amount} €</span>
-
                     <span class="title">${transactionsToShow[i].title}</span>
-   
                  </div>
                 <div class="single_pos_part_amount_more">
-                 
-                    <span onclick="openMenuMore(${transactionsToShow[i].showMoreID}, event)" class="show_more button">&#x22EF;</span>
+                    
                     <div id="show_more${transactionsToShow[i].showMoreID}" class="more">
-                    <div class="edit button">
-                        <img onclick="editTransaction()" src="./img/icons8-bleistift-64.png" alt="Bleistift">
+                        <div class="edit button">
+                            <img onclick="" src="./img/icons8-bleistift-64.png" alt="Bleistift">
+                        </div>
+                        <div class="delete button">
+                            <img onclick="deleteTransaction()" src="./img/icons8-müll-64.png" alt="Mülleimer">
+                        </div>
+                        <div onclick="closeMenuMore(${transactionsToShow[i].showMoreID})" class="close_menu button">
+                            <img src="./img/icons8-ausgang-80.png" alt="Ausgang">
+                        </div>
                     </div>
-                    <div class="delete button">
-                        <img onclick="deleteTransaction()" src="./img/icons8-müll-64.png" alt="Mülleimer">
-                    </div>
-                    <div onclick="closeMenuMore(${transactionsToShow[i].showMoreID})" class="close_menu button">
-                        <img src="./img/icons8-ausgang-80.png" alt="Mülleimer">
-                    </div>
+                    <span onclick="openMenuMore(${transactionsToShow[i].showMoreID}, event)" id="show_more_btn${transactionsToShow[i].showMoreID}" class="show_more button">&#x22EF;</span>
                 </div>
             </div>
-        </div>
         `
     }
 }

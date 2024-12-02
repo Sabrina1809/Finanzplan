@@ -5,15 +5,39 @@
     -webkit-tap-highlight-color: transparent;
 }
 
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+  
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+  
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgb(142, 142, 143), rgb(75,75,75));
+    border-radius: 10px;
+}
+  
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, rgb(117, 116, 116), rgb(75,75,75));
+    cursor: pointer;
+}
+
 body {
     margin: 0 auto;
     text-align: center;
     width: 100%;
     min-width: 320px;
-    min-height: 100vh;
-    background-color: rgb(42, 37, 99);
+    height: 100vh;
+    overflow: hidden;
+    background-color: rgb(84, 83, 83);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .button {
@@ -54,11 +78,18 @@ body {
         display: block;
         & .header_app {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 600px;
+            margin: 0 auto;
             gap: 10px;
+            & .header_app_logo {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
             & h1 {
                 font-weight: 500;
-                margin-bottom: 10px;
             }
             & img {
                 width: 38px;
@@ -66,15 +97,9 @@ body {
             }
         }
         & .add_new_pos {
-            position: absolute;
-            right: 65px;
-            top: 35px;
             display: flex;
             justify-content: center;
             align-items: center;
-        }
-        & .next_month {
-            padding: 1px 6px 5px 6px;
         }
         & .month {
             margin-top: 20px;
@@ -83,12 +108,11 @@ body {
                 align-items: center;
                 justify-content: space-between;
                 margin: 0 auto 10px auto;
-                width: 90%;
+                width: 100%;
                 max-width: 600px;
-                padding: 0 15px;
             }
             & .main {
-                width: 90%;
+                width: 100%;
                 max-width: 600px;
                 max-height: 420px;
                 margin: 0 auto 10px auto;
@@ -230,14 +254,25 @@ body {
     display: none;
     & .overlay_add_pos {
         position: relative;
+        & form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
         & .header_form {
+            max-width: 600px;
+            margin: 0 auto;
             display: flex;
             flex-direction: row;
-            justify-content: center;
+            justify-content: space-between;
+            align-items: center;
             gap: 10px;
+            & .header_form_title_logo {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
             & h1 {
                 font-weight: 500;
-                margin-bottom: 10px;
             }
             & img {
                 width: 38px;
@@ -248,9 +283,6 @@ body {
             display: flex;
             align-items: center;
             justify-content: center;
-            position: absolute;
-            right: 10%;
-            top: 4px;
         }
         & form {
             & .form_section {
@@ -463,9 +495,6 @@ body {
                 right: 10%;
             }
             & .header_app {
-                align-items: center;
-                justify-content: left;
-                margin-left: 2.5%;
                 & h1 {
                     font-size: 18px;
                     margin-bottom: 0px;
@@ -476,7 +505,6 @@ body {
                     width: 100%;
                 }
                 & .main {
-                    width: 95%;
                     & .transfer {
                         margin-bottom: 10px;
                         & .transfer_amount {
@@ -514,23 +542,16 @@ body {
         display: none;
     }
     .overlay {
+        width: 95%;
         & .overlay_add_pos {
-            & .header_form {
-                align-items: center;
-                justify-content: left;
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-                gap: 10px;
                 & h1 {
                     text-align: left;
                     font-size: 18px;
                     margin-bottom: 0px;
                 }
-            }
-            & .closeForm {
-                right: 0%;
-            }
+        }
+        & .closeForm {
+            right: 0%;
         }
     }
 }
@@ -539,9 +560,6 @@ body {
     .ctn {
         & .month_overview {
             & .month {
-                & .header {
-                    padding: 0 10px;
-                }
                 & .main {
                     & .transfer {
                         & .transfer_on_off {
@@ -563,6 +581,13 @@ body {
                         }
                     }
                 }
+            }
+        }
+    }
+    .overlay {
+        & .overlay_add_pos {
+            & .header_form {
+                justify-content: left;
             }
         }
     }

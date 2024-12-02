@@ -5,16 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="./img/icons8-geld-48.png" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
-    <title>Meine Finanzen</title>
+    <title>Haushaltsbuch</title>
 </head>
 <body onload="init()">
     <div id="overview_ctn" class="ctn">
         <div class="month_overview">
             <div class="header_app">
-                <img src="./img/icons8-geld-48.png" alt="Münzen">
-                <h1>Meine Finanzen</h1>
+                <div class="header_app_logo">
+                    <img src="./img/icons8-geld-48.png" alt="Münzen">
+                    <h1>Haushaltsbuch</h1>
+                </div>
+                <span onclick="openForm()" class="add_new_pos button">+</span>
             </div>
-            <span onclick="openForm()" class="add_new_pos button">+</span>
             <div class="month">
                 <div class="header">
                     <span onclick="showNextMonth(-1)" class="next_month button">&#x290C;</span>
@@ -192,10 +194,13 @@
     <div id="overlay_ctn" class="overlay">
         <div class="overlay_add_pos">
             <div class="header_form">
-                <img src="./img/icons8-geld-48.png" alt="Münzen">
-                <h1>neue Einnahme / Ausgabe</h1>
+                <div class="header_form_title_logo">
+                    <img src="./img/icons8-geld-48.png" alt="Münzen">
+                    <h1>neue Position</h1>
+                </div>
+                <span onclick="closeForm()" class="closeForm button">x</span>
             </div>
-            <span onclick="closeForm()" class="closeForm button">x</span>
+           
             <form onsubmit="saveNewTransaction(event)" action="">
                 <div class="type form_section">
                     <h2>Typ</h2>

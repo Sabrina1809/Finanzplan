@@ -63,15 +63,19 @@ body {
         background-color: transparent;
     }
 }
-
+.next_month {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 6px;
+}
 .ctn {
     border: 1px solid black;
     background-color: rgb(243, 243, 243);
     border-radius: 10px;
     width: 90%;
     max-width: 700px;
-    height: 600px;
-    margin: 20px auto;
+    max-height: 95%;
     padding: 30px;
     position: relative;
     & .month_overview {
@@ -332,28 +336,7 @@ body {
                 & .frequenzy_ctn {
                     display: flex;
                     gap: 20px; 
-                    & button {
-                        padding: 5px;
-                        width: 90px;
-                        background-color: white;
-                        border: none;
-                        outline: none;
-                        border-radius: 5px;
-                        text-align: center;
-                        color: rgba(0, 0, 0, 0.5);
-                        box-shadow: 0 0 2px rgba(0, 0, 0, 0.5) inset;
-                        font-size: 14px;
-                        &:hover {
-                            cursor: pointer;
-                            color: rgba(0, 0, 0, 0.75);
-                            box-shadow: 0 0 2px rgba(0, 0, 0, 0.75) inset;
-                        }
-                        &:active {
-                            color: rgba(0, 0, 0, 1);
-                            box-shadow: 0 0 2px rgba(0, 0, 0, 1) inset;
-                            background-color: transparent;
-                        }
-                    }
+                   
                 }
                 & span {
                     display: inline-block;
@@ -584,10 +567,27 @@ body {
             }
         }
     }
-    .overlay {
-        & .overlay_add_pos {
-            & .header_form {
-                justify-content: left;
+}
+
+@media(max-height: 650px) {
+    .ctn {
+        & .month_overview {
+            & .month {
+                & .main {
+                    max-height: 300px;
+                }
+            }
+        }
+    }
+}
+
+@media(max-height: 500px) {
+    .ctn {
+        & .month_overview {
+            & .month {
+                & .main {
+                    max-height: 130px;
+                }
             }
         }
     }

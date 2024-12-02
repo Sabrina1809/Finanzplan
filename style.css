@@ -168,6 +168,7 @@ body {
                         margin-right: 18px;
                     }
                     & .more {
+                        color: rgb(5, 85, 15);
                         display: flex;
                         visibility: visible;
                         width: 0px;
@@ -178,7 +179,7 @@ body {
                         padding: 5px 10px;
                         border-radius: 5px;
                         transition: right 0.5s ease-in-out, 
-                            opacity 1s ease-in-out;
+                            opacity 0.5s ease-in-out;
                         
                         & .edit {
                             display: flex;

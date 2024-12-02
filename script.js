@@ -182,12 +182,13 @@ function calc(plusOrMinusAbove, lastSum, lastAmount) {
 function fillMonthHTML() {
     document.getElementById("pos_month").innerHTML = "";    
     for (let i = 0; i < transactionsToShow.length; i++) {
+        let color = checkColor(i);
         document.getElementById("pos_month").innerHTML += `
             <div class="single_pos">
                 <div class="single_pos_part_day_title">
                     <span class="day">${transactionsToShow[i].day}</span>
                     <span id="current_sum${transactionsToShow[i].showMoreID}" class="current_sum"></span>
-                    <span class="amount">${transactionsToShow[i].plusMinus} ${transactionsToShow[i].amount} €</span>
+                    <span style="color:${color};" class="amount">${transactionsToShow[i].plusMinus} ${transactionsToShow[i].amount} €</span>
                     <span class="title">${transactionsToShow[i].title}</span>
                  </div>
                 <div class="single_pos_part_amount_more">
@@ -207,6 +208,14 @@ function fillMonthHTML() {
                 </div>
             </div>
         `
+    }
+}
+
+function checkColor(i) {
+    if (transactionsToShow[i].plusMinus == "-") {
+        return "rgb(103, 15, 7)"
+    } else {
+        return "rgb(5, 85, 15)"
     }
 }
 

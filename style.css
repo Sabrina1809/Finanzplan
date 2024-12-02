@@ -75,7 +75,7 @@ body {
     border-radius: 10px;
     width: 90%;
     max-width: 700px;
-    max-height: 95%;
+    max-height: 800px;
     padding: 30px;
     position: relative;
     & .month_overview {
@@ -118,7 +118,7 @@ body {
             & .main {
                 width: 100%;
                 max-width: 600px;
-                max-height: 420px;
+                max-height: 800px;
                 margin: 0 auto 10px auto;
                 overflow-y: scroll;
                 padding: 10px;
@@ -563,6 +563,30 @@ body {
                             margin-left: 40px;
                         }
                     }
+                }
+            }
+        }
+    }
+}
+
+@media(max-height: 1000px) {
+    .ctn {
+        & .month_overview {
+            & .month {
+                & .main {
+                    max-height: 800px;
+                }
+            }
+        }
+    }
+}
+
+@media(max-height: 850px) {
+    .ctn {
+        & .month_overview {
+            & .month {
+                & .main {
+                    max-height: 420px;
                 }
             }
         }

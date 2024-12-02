@@ -63,12 +63,14 @@ body {
         background-color: transparent;
     }
 }
+
 .next_month {
     display: flex;
     justify-content: center;
     align-items: center;
     padding-bottom: 6px;
 }
+
 .ctn {
     border: 1px solid black;
     background-color: rgb(243, 243, 243);

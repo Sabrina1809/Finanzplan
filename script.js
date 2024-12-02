@@ -140,7 +140,7 @@ function calcMoney() {
 function calcPosOne() {
     let uebertragLastMonth = document.getElementById("transfer_amount_input").value;
     let idFromIndexOne = transactionsToShow[0].showMoreID;
-    document.getElementById(`current_sum${idFromIndexOne}`).innerHTML = uebertragLastMonth + " €";
+    document.getElementById(`current_sum${idFromIndexOne}`).innerHTML = Number(uebertragLastMonth) + " €";
 }
 
 function calcOtherPos(i) {
@@ -148,7 +148,7 @@ function calcOtherPos(i) {
     let lastAmount = Number(transactionsToShow[i-1].amount);
     let lastSum = (document.getElementById(`current_sum${transactionsToShow[i-1].showMoreID}`).innerHTML).slice(0, -2)
     let newSum = calc(plusOrMinusAbove, lastSum, lastAmount); 
-    document.getElementById(`current_sum${transactionsToShow[i].showMoreID}`).innerHTML = newSum + " €";
+    document.getElementById(`current_sum${transactionsToShow[i].showMoreID}`).innerHTML = Number(newSum) + " €";
 }
 
 let uebertragLastMonth;
@@ -157,20 +157,20 @@ function calcLastPos() {
     uebertragLastMonth = 0;
     let plusOrMinusAbove = transactionsToShow[transactionsToShow.length-1].plusMinus;
     let lastAmount = Number(transactionsToShow[transactionsToShow.length-1].amount);
-    let lastSum = Number((document.getElementById(`current_sum${transactionsToShow[transactionsToShow.length-1].showMoreID}`).innerHTML).slice(0, -2))
+    let lastSum = (document.getElementById(`current_sum${transactionsToShow[transactionsToShow.length-1].showMoreID}`).innerHTML).slice(0, -2)
     let newSum = calc(plusOrMinusAbove, lastSum, lastAmount); 
-    document.getElementById(`saldo_amount`).innerHTML = newSum + " €";
+    document.getElementById(`saldo_amount`).innerHTML = Number(newSum) + " €";
     return uebertragLastMonth = newSum;
 }
 
 function calc(plusOrMinusAbove, lastSum, lastAmount) {
     let sum;
     if (plusOrMinusAbove == "+") {
-        sum = lastSum + lastAmount;
+        sum = Number(lastSum) + lastAmount;
     } else {
-        sum = lastSum - lastAmount;
+        sum = Number(lastSum) - lastAmount;
     }
-    return sum
+    return Number(sum)
 }
 
 function fillMonthHTML() {

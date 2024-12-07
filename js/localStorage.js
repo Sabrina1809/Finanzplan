@@ -50,5 +50,6 @@ async function deleteTransaction() {
     await getIDFromStorage()
     closeMenuMore(idToWork)
     fillMonthHTML()
+    calcMoney()
     document.querySelector(".button").removeEventListener("onclick", deleteTransaction)
 }

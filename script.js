@@ -5,7 +5,7 @@ let currentYear = new Date().getFullYear();
 let monthToShow = Number(currentMonth);
 let yearToShow = Number(currentYear);
 
-function changeUebertrag() {
+async function changeUebertrag() {
     let uebertrag = document.getElementById("transfer_amount");
     if(toggleButton.classList.contains("active")) {
         document.getElementById("transfer_amount_input").disabled = true;
@@ -13,6 +13,7 @@ function changeUebertrag() {
     } else {
         document.getElementById("transfer_amount_input").disabled = false;
     }
+    fillMonthHTML()
     calcMoney()
 }
 

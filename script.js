@@ -1,12 +1,13 @@
 const toggleButton = document.getElementById('toggleButton');
 let idToWork;
+let transactionToEdit;
 let currentMonth = new Date().getMonth() + 1;
 let currentYear = new Date().getFullYear();
 let monthToShow = Number(currentMonth);
 let yearToShow = Number(currentYear);
+let uebertragLastMonth;
 
 async function changeUebertrag() {
-    let uebertrag = document.getElementById("transfer_amount");
     if(toggleButton.classList.contains("active")) {
         document.getElementById("transfer_amount_input").disabled = true;
         document.getElementById("transfer_amount_input").value = 0;
@@ -21,7 +22,6 @@ async function showCurrentMonth() {
     await getTransactionsFromStorage();
     await getIDFromStorage();
     document.getElementById("current_month").innerHTML = monthToShow + " / " + yearToShow;
-    console.log(allTransactions)
     if (allTransactions.length == 0) {
         document.getElementById("pos_month").innerHTML = "Füge deine erste Transaktion mit dem + Button hinzu."
     } else {
@@ -69,6 +69,15 @@ function openForm() {
     document.getElementById("overview_ctn").style.display = "none";
     document.getElementById("overlay_ctn").style.display = "block";
     resetForm()
+    prepareCalender();
+    document.getElementById("headline_form").innerHTML = "neue Position"
+}
+
+function prepareCalender() {
+    const dateInput = document.getElementById("date");
+    const today = new Date();
+    const formattedDate = today.toISOString().split("T")[0]; // YYYY-MM-DD
+    dateInput.value = formattedDate;
 }
 
 function closeForm() {
@@ -77,25 +86,17 @@ function closeForm() {
     document.getElementById("overlay_ctn").style.display = "none";
 }
 
-let transactionToEdit;
-
-function editTransaction(idToWork) {
+function editTransaction(transactionToEdit) {
     document.getElementById("overview_ctn").style.display = "none";
     document.getElementById("overlay_ctn").style.display = "block";
-    // closeMenuMore(idToWork)
     transactionToEdit = checkTransactionToEdit(idToWork);
-    console.log(transactionToEdit);
     document.getElementById("date").value = `${transactionToEdit.year}-${transactionToEdit.month}-${transactionToEdit.day}`
     document.getElementById("type_option").value = transactionToEdit.type;
     document.getElementById("frequenzy_option").value = transactionToEdit.frequenzy;
     document.getElementById("title_input").value = transactionToEdit.title;
     document.getElementById("amount").value = transactionToEdit.amount;
+    document.getElementById("headline_form").innerHTML = "Position ändern"
     return transactionToEdit;
-}
-
-function saveEditedTransaction(e) {
-    console.log(transactionToEdit);
-    
 }
 
 function checkTransactionToEdit(idToWork) {
@@ -110,8 +111,6 @@ function checkTransactionToEdit(idToWork) {
 }
 
 function editOrNewTransaction() {
-    console.log('transactionToEdit: ' + transactionToEdit);
-    
     if (transactionToEdit = "") {
         saveNewTransaction(event)
     } else {
@@ -172,12 +171,10 @@ function calcPosOne() {
 function calcOtherPos(i) {
     let plusOrMinusAbove = transactionsToShow[i-1].plusMinus;
     let lastAmount = Number(transactionsToShow[i-1].amount);
-    let lastSum = (document.getElementById(`current_sum${transactionsToShow[i-1].showMoreID}`).innerHTML).slice(0, -2)
+    let lastSum = (document.getElementById(`current_sum${transactionsToShow[i-1].showMoreID}`).innerHTML).slice(0, -2);
     let newSum = calc(plusOrMinusAbove, lastSum, lastAmount); 
     document.getElementById(`current_sum${transactionsToShow[i].showMoreID}`).innerHTML = Number(newSum) + " €";
 }
-
-let uebertragLastMonth;
 
 function calcLastPos() {
     uebertragLastMonth = 0;
@@ -215,7 +212,7 @@ function fillMonthHTML() {
                     
                     <div id="show_more${transactionsToShow[i].showMoreID}" class="more">
                         <div class="edit button">
-                            <img onclick="editTransaction(idToWork)" src="./img/icons8-bleistift-64.png" alt="Bleistift">
+                            <img onclick="editTransaction(transactionToEdit)" src="./img/icons8-bleistift-64.png" alt="Bleistift">
                         </div>
                         <div class="delete button">
                             <img onclick="deleteTransaction()" src="./img/icons8-müll-64.png" alt="Mülleimer">

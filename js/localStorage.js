@@ -44,11 +44,13 @@ function checkTransactionsToShow() {
 }
 
 async function deleteTransaction() {
+    console.log(idToWork);
+    
     allTransactions = allTransactions.filter(transaction => transaction.showMoreID !== idToWork);
     localStorage.setItem("transactionsFinanzplan", JSON.stringify(allTransactions));
     await getTransactionsFromStorage()
     await getIDFromStorage()
-    closeMenuMore(idToWork)
+    
     fillMonthHTML()
     calcMoney()
     document.querySelector(".button").removeEventListener("onclick", deleteTransaction)

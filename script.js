@@ -77,18 +77,25 @@ function closeForm() {
     document.getElementById("overlay_ctn").style.display = "none";
 }
 
-function editTransaction() {
+let transactionToEdit;
+
+function editTransaction(idToWork) {
     document.getElementById("overview_ctn").style.display = "none";
     document.getElementById("overlay_ctn").style.display = "block";
-    closeMenuMore(idToWork)
-    let transactionToEdit = checkTransactionToEdit(idToWork);
+    // closeMenuMore(idToWork)
+    transactionToEdit = checkTransactionToEdit(idToWork);
     console.log(transactionToEdit);
     document.getElementById("date").value = `${transactionToEdit.year}-${transactionToEdit.month}-${transactionToEdit.day}`
     document.getElementById("type_option").value = transactionToEdit.type;
     document.getElementById("frequenzy_option").value = transactionToEdit.frequenzy;
     document.getElementById("title_input").value = transactionToEdit.title;
     document.getElementById("amount").value = transactionToEdit.amount;
+    return transactionToEdit;
+}
 
+function saveEditedTransaction(e) {
+    console.log(transactionToEdit);
+    
 }
 
 function checkTransactionToEdit(idToWork) {
@@ -100,6 +107,18 @@ function checkTransactionToEdit(idToWork) {
     }
     document.querySelector(".button").addEventListener("onclick", deleteTransaction)
     return transaction
+}
+
+function editOrNewTransaction() {
+    console.log('transactionToEdit: ' + transactionToEdit);
+    
+    if (transactionToEdit = "") {
+        saveNewTransaction(event)
+    } else {
+        deleteTransaction();
+        saveNewTransaction(event);
+        closeMenuMore(idToWork)
+    }
 }
 
 async function saveNewTransaction(e) {
@@ -125,7 +144,7 @@ async function saveNewTransaction(e) {
     await setAndGetFromLocalStorage(allTransactions, id);
     fillMonthHTML()
     calcMoney()
-    
+    return transactionToEdit = "";
 }
 
 function checkplusMinus() {
@@ -196,7 +215,7 @@ function fillMonthHTML() {
                     
                     <div id="show_more${transactionsToShow[i].showMoreID}" class="more">
                         <div class="edit button">
-                            <img onclick="" src="./img/icons8-bleistift-64.png" alt="Bleistift">
+                            <img onclick="editTransaction(idToWork)" src="./img/icons8-bleistift-64.png" alt="Bleistift">
                         </div>
                         <div class="delete button">
                             <img onclick="deleteTransaction()" src="./img/icons8-müll-64.png" alt="Mülleimer">

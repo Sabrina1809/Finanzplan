@@ -24,6 +24,7 @@ async function showCurrentMonth() {
     document.getElementById("current_month").innerHTML = monthToShow + " / " + yearToShow;
     if (allTransactions.length == 0) {
         document.getElementById("pos_month").innerHTML = "Füge deine erste Transaktion mit dem + Button hinzu."
+        document.querySelector(".saldo_text").style.visibility  = "hidden";
     } else {
         fillMonthHTML()
         changeUebertrag()

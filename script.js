@@ -58,15 +58,13 @@ function openMenuMore(id, e) {
     document.getElementById(`show_more_btn${id}`).style.opacity = "0";
     const allImages = document.querySelectorAll(".more img");
     const allButtons = document.querySelectorAll(".more .button");
-
-// Iteriere über alle gefundenen <img>-Elemente und bearbeite sie
-allImages.forEach((img) => {
-    img.style.width = "24px"; // Beispiel: füge einen roten Rahmen hinzu
-    img.style.height = "24px"; // Ändere den Mauszeiger bei Hover
-});
-allButtons.forEach((button) => {
-    button.style.disabled = "none"
-})
+    allImages.forEach((img) => {
+        img.style.width = "24px";
+        img.style.height = "24px";
+    });
+    allButtons.forEach((button) => {
+        button.style.disabled = "none"
+    })
 }
 
 function closeMenuMore(id) {
@@ -77,10 +75,9 @@ function closeMenuMore(id) {
     document.getElementById(`show_more_btn${id}`).style.opacity = "1";
     const allImages = document.querySelectorAll(".more img");
     const allButtons = document.querySelectorAll(".more .button");
-    // Iteriere über alle gefundenen <img>-Elemente und bearbeite sie
     allImages.forEach((img) => {
-        img.style.width = "0px"; // Beispiel: füge einen roten Rahmen hinzu
-        img.style.height = "0px"; // Ändere den Mauszeiger bei Hover
+        img.style.width = "0px";
+        img.style.height = "0px";
     });
     allButtons.forEach((button) => {
         button.style.disabled = "none"
@@ -116,8 +113,6 @@ function editTransaction(transactionToEdit) {
     document.getElementById("overview_ctn").style.display = "none";
     document.getElementById("overlay_ctn").style.display = "block";
     transactionToEdit = checkTransactionToEdit(idToWork);
-    console.log(transactionToEdit);
-    
     document.getElementById("date").value = `${transactionToEdit.year}-${transactionToEdit.month}-${transactionToEdit.day}`
     document.getElementById("type_option").value = transactionToEdit.type;
     document.getElementById("frequenzy_option").value = transactionToEdit.frequenzy;
@@ -134,22 +129,16 @@ function checkTransactionToEdit(idToWork) {
             return transaction = allTransactions[i]
         }
     }
-    // document.querySelector(".button").addEventListener("onclick", deleteTransaction)
     return transaction
 }
 
 function isFormComplete(e, transactionToEdit) {
-    console.log('isFormComplete erreicht');
-    
     e.preventDefault();
     checkTitle()
     checkAmount()
     if (document.getElementById("title_input").value !== "" &&
-    document.getElementById("amount").value !== "") {
-        console.log('alles gefüllt');
-        console.log(transactionToEdit);
-        
-    editOrNewTransaction(transactionToEdit)
+        document.getElementById("amount").value !== "") {
+            editOrNewTransaction(transactionToEdit)
     } else {
         return false
     }
@@ -171,26 +160,14 @@ function checkAmount() {
     }
 }
 
-function formIsComplete() {
-   
-}
-
 function editOrNewTransaction(transactionToEdit) {
-    console.log(transactionToEdit);
-    console.log(idToWork);
-    
     if (idToWork == "") {
-        console.log('if erreicht, editOrNewTransaction');
-        
         saveNewTransaction(event)
         transactionToEdit = "";
         return transactionToEdit;
     } else {
-        console.log('else erreicht, editOrNewTransaction');
-
         deleteTransaction(idToWork);
         saveNewTransaction(event);
-        // closeMenuMore(idToWork)
         transactionToEdit = "";
         return transactionToEdit;
     }

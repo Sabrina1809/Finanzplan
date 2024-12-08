@@ -11,7 +11,6 @@
 }
   
 ::-webkit-scrollbar-track {
-    /* background: #f1f1f1; */
     border-radius: 10px;
 }
   
@@ -32,7 +31,6 @@ body {
     min-width: 320px;
     height: 100vh;
     overflow: hidden;
-    /* background-color: rgb(84, 83, 83); */
     background-color: white;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 14px;
@@ -49,9 +47,7 @@ body {
     height: 30px;
     font-size: 21px;
     border-radius: 5px;
-    /* display: inline-block; */
     color: rgba(0, 0, 0, 0.5);
-    /* box-shadow: 0 0 2px rgba(0, 0, 0, 0.1) inset; */
     &:hover {
         cursor: pointer;
         color: rgba(0, 0, 0, 0.75);
@@ -61,7 +57,6 @@ body {
     &:active {
         color: rgba(0, 0, 0, 1);
         box-shadow: 0 0 2px rgba(0, 0, 0, 1) inset;
-        /* background-color: transparent; */
     }
 }
 
@@ -69,7 +64,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* padding-bottom: 6px; */
     & .next_month_img {
         width: 28px;
         height: 28px;
@@ -80,13 +74,9 @@ body {
 }
 
 .ctn {
-    /* border: 1px solid rgba(0, 0, 0, 0.155); */
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1) inset;
-    /* background-color: rgb(243, 243, 243); */
-    /* border-radius: 10px; */
     width: 100%;
     max-width: 700px;
-    /* max-height: 800px; */
     height: 100%;
     padding: 30px;
     position: relative;
@@ -134,15 +124,11 @@ body {
             & .main {
                 width: 100%;
                 max-width: 600px;
-                /* max-height: 800px; */
-                height: calc(100vh - 200px);  /* Fallback */
-                height: calc(100dvh - 200px); /* Modern */
-                
+                max-height: calc(100vh - 200px);
+                max-height: calc(100dvh - 200px);
                 margin: 20px auto 10px auto;
                 overflow-y: scroll;
                 padding: 0 10px 0 0;
-                /* border-radius: 10px; */
-                /* border: 1px solid white; */
                 overflow-x: hidden;
                 & .single_pos {
                     display: flex;
@@ -242,8 +228,6 @@ body {
                     & .transfer_title {
                         text-align: left;
                         color: gray;
-                        /* width: 250px; */
-                        /* margin-right: 20px; */
                     }
                     & #transfer_amount_input {
                         width: 70px;
@@ -258,7 +242,6 @@ body {
                     & .transfer_amount {
                         text-align: right;
                         color: gray;
-                        /* width: 100px; */
                         margin-right: 15px;
                     }
                 }
@@ -275,13 +258,10 @@ body {
 }
 
 .overlay {
-    /* border: 1px solid black; */
     background-color: rgb(243, 243, 243);
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1) inset;
-    /* border-radius: 10px; */
     width: 100%;
     max-width: 700px;
-    /* height: 600px; */
     height: 100%;
     margin: 20px auto;
     padding: 30px;
@@ -292,8 +272,8 @@ body {
         & form {
             max-width: 600px;
             margin: 10px auto 0 auto;
-            height: calc(100vh - 100px);  /* Fallback */
-            height: calc(100dvh - 100px); /* Modern */
+            max-height: calc(100vh - 100px);
+            max-height: calc(100dvh - 100px);
             overflow: auto;
             padding-right: 10px;
         }
@@ -375,7 +355,6 @@ body {
                 & .frequenzy_ctn {
                     display: flex;
                     gap: 20px; 
-                   
                 }
                 & span {
                     display: inline-block;
@@ -479,7 +458,6 @@ body {
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.5) inset;
     align-items: center;
     font-size: 12px;
-    /* margin-right: 80px; */
     & span {
         color: black;
         font-weight: 500;
@@ -511,7 +489,6 @@ body {
         font-size: 12px;
     }
     .ctn {
-        /* width: 95%; */
         & .month_overview {
             & .add_new_pos {
                 right: 10%;
@@ -534,25 +511,19 @@ body {
                         }
                     }
                     & .single_pos {
-
                         & .single_pos_part_day_title {
                             display: flex;
                             flex-wrap: wrap;
                             justify-content: unset;
-                            /* flex-direction: column; */
                         }
                         & .title {
-                            /* border: 1px solid black; */
                             width: 150px;
                             margin-right: 0;
-                         
                         }
                         & .amount {
-                            /* border: 1px solid black; */
                             margin-right: 5px;
                         }
                         & .day {
-                            /* border: 1px solid black; */
                             width: 35px;
                         }
                     }
@@ -564,13 +535,12 @@ body {
         display: none;
     }
     .overlay {
-        /* width: 95%; */
         & .overlay_add_pos {
-                & h1 {
-                    text-align: left;
-                    font-size: 18px;
-                    margin-bottom: 0px;
-                }
+            & h1 {
+                text-align: left;
+                font-size: 18px;
+                margin-bottom: 0px;
+            }
         }
         & .closeForm {
             right: 0%;
@@ -602,54 +572,6 @@ body {
                             margin-left: 40px;
                         }
                     }
-                }
-            }
-        }
-    }
-}
-
-@media(max-height: 1000px) {
-    .ctn {
-        & .month_overview {
-            & .month {
-                & .main {
-                    /* max-height: 800px; */
-                }
-            }
-        }
-    }
-}
-
-@media(max-height: 850px) {
-    .ctn {
-        & .month_overview {
-            & .month {
-                & .main {
-                    /* max-height: 420px; */
-                }
-            }
-        }
-    }
-}
-
-@media(max-height: 650px) {
-    .ctn {
-        & .month_overview {
-            & .month {
-                & .main {
-                    /* max-height: 300px; */
-                }
-            }
-        }
-    }
-}
-
-@media(max-height: 500px) {
-    .ctn {
-        & .month_overview {
-            & .month {
-                & .main {
-                    /* max-height: 130px; */
                 }
             }
         }

@@ -2,6 +2,7 @@ let allTransactions;
 let allKeys = [];
 let id;
 let transactionsToShow = [];
+// let idToWork = "";
 
 async function init() {
     await getTransactionsFromStorage();
@@ -50,5 +51,4 @@ async function deleteTransaction(idToWork) {
     await getIDFromStorage()
     fillMonthHTML()
     calcMoney()
-    document.querySelector(".button").removeEventListener("onclick", deleteTransaction)
 }

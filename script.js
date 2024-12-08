@@ -65,6 +65,7 @@ function openMenuMore(id, e) {
     allButtons.forEach((button) => {
         button.style.disabled = "none"
     })
+    return idToWork
 }
 
 function closeMenuMore(id) {
@@ -105,7 +106,6 @@ function closeForm() {
     document.getElementById("overview_ctn").style.display = "block";
     document.getElementById("overlay_ctn").style.display = "none";
     transactionToEdit = "";
-    console.log(transactionToEdit);
     return transactionToEdit;
 }
 
@@ -138,7 +138,7 @@ function isFormComplete(e, transactionToEdit) {
     checkAmount()
     if (document.getElementById("title_input").value !== "" &&
         document.getElementById("amount").value !== "") {
-            editOrNewTransaction(transactionToEdit)
+            editOrNewTransaction(transactionToEdit, idToWork)
     } else {
         return false
     }
@@ -160,7 +160,7 @@ function checkAmount() {
     }
 }
 
-function editOrNewTransaction(transactionToEdit) {
+function editOrNewTransaction(transactionToEdit, idToWork) {
     if (idToWork == "") {
         saveNewTransaction(event)
         transactionToEdit = "";
@@ -267,8 +267,8 @@ function fillMonthHTML() {
                         <div onclick="event.stopPropagation(); editTransaction(transactionToEdit)" class="edit button">
                             <img onclick="event.stopPropagation(); editTransaction(transactionToEdit)" src="./img/icons8-bleistift-64.png" alt="Bleistift">
                         </div>
-                        <div onclick="event.stopPropagation(); deleteTransaction()" class="delete button">
-                            <img onclick="event.stopPropagation(); deleteTransaction()" src="./img/icons8-müll-64.png" alt="Mülleimer">
+                        <div onclick="event.stopPropagation(); deleteTransaction(idToWork)" class="delete button">
+                            <img onclick="event.stopPropagation(); deleteTransaction(idToWork)" src="./img/icons8-müll-64.png" alt="Mülleimer">
                         </div>
                         <div onclick="event.stopPropagation(); closeMenuMore(${transactionsToShow[i].showMoreID})" class="close_menu button">
                             <img onclick="event.stopPropagation(); closeMenuMore(${transactionsToShow[i].showMoreID})" src="./img/icons8-ausgang-80.png" alt="Ausgang">

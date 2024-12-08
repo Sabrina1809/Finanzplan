@@ -43,7 +43,9 @@ function checkTransactionsToShow() {
     transactionsToShow = transactionsToShow
 }
 
-async function deleteTransaction() {
+async function deleteTransaction(idToWork) {
+    console.log('deleteTransaction erreicht');
+    
     allTransactions = allTransactions.filter(transaction => transaction.showMoreID !== idToWork);
     localStorage.setItem("transactionsFinanzplan", JSON.stringify(allTransactions));
     await getTransactionsFromStorage()

@@ -1,6 +1,6 @@
 const toggleButton = document.getElementById('toggleButton');
-let idToWork;
-let transactionToEdit;
+let idToWork = "";
+let transactionToEdit = "";
 let currentMonth = new Date().getMonth() + 1;
 let currentYear = new Date().getFullYear();
 let monthToShow = Number(currentMonth);
@@ -85,6 +85,7 @@ function closeMenuMore(id) {
     allButtons.forEach((button) => {
         button.style.disabled = "none"
     })
+    return idToWork = "";
 }
 
 function openForm() {
@@ -106,12 +107,17 @@ function closeForm() {
     resetForm()
     document.getElementById("overview_ctn").style.display = "block";
     document.getElementById("overlay_ctn").style.display = "none";
+    transactionToEdit = "";
+    console.log(transactionToEdit);
+    return transactionToEdit;
 }
 
 function editTransaction(transactionToEdit) {
     document.getElementById("overview_ctn").style.display = "none";
     document.getElementById("overlay_ctn").style.display = "block";
     transactionToEdit = checkTransactionToEdit(idToWork);
+    console.log(transactionToEdit);
+    
     document.getElementById("date").value = `${transactionToEdit.year}-${transactionToEdit.month}-${transactionToEdit.day}`
     document.getElementById("type_option").value = transactionToEdit.type;
     document.getElementById("frequenzy_option").value = transactionToEdit.frequenzy;
@@ -128,19 +134,29 @@ function checkTransactionToEdit(idToWork) {
             return transaction = allTransactions[i]
         }
     }
-    document.querySelector(".button").addEventListener("onclick", deleteTransaction)
+    // document.querySelector(".button").addEventListener("onclick", deleteTransaction)
     return transaction
 }
 
-function isFormComplete(e) {
+function isFormComplete(e, transactionToEdit) {
+    console.log('isFormComplete erreicht');
+    
     e.preventDefault();
     checkTitle()
     checkAmount()
-    formIsComplete()
+    if (document.getElementById("title_input").value !== "" &&
+    document.getElementById("amount").value !== "") {
+        console.log('alles gefüllt');
+        console.log(transactionToEdit);
+        
+    editOrNewTransaction(transactionToEdit)
+    } else {
+        return false
+    }
 }
 
 function checkTitle() {
-    if (document.getElementById("error_title").value == "") {
+    if (document.getElementById("title_input").value == "") {
         document.getElementById("error_title").style.display = "flex";
     } else {
         document.getElementById("error_title").style.display = "none";
@@ -148,7 +164,7 @@ function checkTitle() {
 }
 
 function checkAmount() {
-    if (document.getElementById("error_amount").value == "") {
+    if (document.getElementById("amount").value == "") {
         document.getElementById("error_amount").style.display = "flex";
     } else {
         document.getElementById("error_amount").style.display = "none";
@@ -156,21 +172,27 @@ function checkAmount() {
 }
 
 function formIsComplete() {
-    if (document.getElementById("error_title").value != "" &&
-        document.getElementById("error_amount").value != "") {
-        editOrNewTransaction()
-    } else {
-        return false
-    }
+   
 }
 
-function editOrNewTransaction() {
-    if (transactionToEdit = "") {
+function editOrNewTransaction(transactionToEdit) {
+    console.log(transactionToEdit);
+    console.log(idToWork);
+    
+    if (idToWork == "") {
+        console.log('if erreicht, editOrNewTransaction');
+        
         saveNewTransaction(event)
+        transactionToEdit = "";
+        return transactionToEdit;
     } else {
-        deleteTransaction();
+        console.log('else erreicht, editOrNewTransaction');
+
+        deleteTransaction(idToWork);
         saveNewTransaction(event);
-        closeMenuMore(idToWork)
+        // closeMenuMore(idToWork)
+        transactionToEdit = "";
+        return transactionToEdit;
     }
 }
 

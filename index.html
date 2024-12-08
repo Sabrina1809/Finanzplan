@@ -63,7 +63,7 @@
                     <img class="close_form_img" src="./img/icons8-close-50.png" alt="close Button">
                 </span>
             </div>
-            <form onsubmit="event.preventDefault(); isFormComplete(event)" action="">
+            <form onsubmit="event.preventDefault(); isFormComplete(event, transactionToEdit)" action="">
                 <div class="type form_section">
                     <h2>Typ</h2>
                     <select id="type_option" onchange="changeTypeOfTransaktion(this.value)">
@@ -97,7 +97,7 @@
                     <input type="number" name="amount" id="amount">
                     <span>€</span>
                 </div>
-                <button onclick="event.preventDefault()" class="button" type="submit"><img src="./img/icons8-speichern-80.png" alt="Diskette"></button>
+                <button onclick="" class="button" type="submit"><img src="./img/icons8-speichern-80.png" alt="Diskette"></button>
             </form>
         </div>
     </div>

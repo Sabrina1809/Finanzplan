@@ -15,13 +15,19 @@
                     <img src="./img/icons8-geld-48.png" alt="Münzen">
                     <h1>Haushaltsbuch</h1>
                 </div>
-                <span onclick="openForm()" class="add_new_pos button">+</span>
+                <span onclick="openForm()" class="add_new_pos button">
+                    <img class="add_new_pos_img" src="./img/icons8-plus-mathe-50.png" alt="Plus Zeichen">
+                </span>
             </div>
             <div class="month">
                 <div class="header">
-                    <span onclick="showNextMonth(-1)" class="next_month button">&#x290C;</span>
+                    <span onclick="showNextMonth(-1)" class="next_month button">
+                        <img class="next_month_img next_month_img_left" src="./img/icons8-rechts-50.png" alt="Pfeil nach rechts">
+                    </span>
                     <span id="current_month"> xx / xxxx</span>
-                    <span onclick="showNextMonth(1)" class="next_month button">&#x290D;</span>
+                    <span onclick="showNextMonth(1)" class="next_month button">
+                        <img class="next_month_img next_month_img_right" src="./img/icons8-rechts-50.png" alt="Pfeil nach links">
+                    </span>
                 </div>
                 <div class="main">
                     <div class="transfer">
@@ -53,7 +59,9 @@
                     <img src="./img/icons8-geld-48.png" alt="Münzen">
                     <h1 id="headline_form">neue Position</h1>
                 </div>
-                <span onclick="closeForm()" class="closeForm button">x</span>
+                <span onclick="closeForm()" class="closeForm button">
+                    <img class="close_form_img" src="./img/icons8-close-50.png" alt="close Button">
+                </span>
             </div>
             <form onsubmit="editOrNewTransaction()" action="">
                 <div class="type form_section">

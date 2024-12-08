@@ -63,7 +63,7 @@
                     <img class="close_form_img" src="./img/icons8-close-50.png" alt="close Button">
                 </span>
             </div>
-            <form onsubmit="editOrNewTransaction()" action="">
+            <form onsubmit="event.preventDefault(); isFormComplete(event)" action="">
                 <div class="type form_section">
                     <h2>Typ</h2>
                     <select id="type_option" onchange="changeTypeOfTransaktion(this.value)">
@@ -80,8 +80,9 @@
                 </div>
                 <div class="input_title_pos form_section">
                     <h2>Titel</h2>
+                    <p id="error_title" class="error_text">(erforderlich)</p>
                     <label class="label_to_hide" for="title_input">Titel</label>
-                    <input required type="text" name="title_input" id="title_input">
+                    <input type="text" name="title_input" id="title_input">
                 </div>
                 <div class="date form_section">
                     <h2>Datum</h2>
@@ -90,12 +91,13 @@
                 </div>
                 <div class="input_amount form_section">
                     <h2>Betrag</h2>
+                    <p id="error_amount" class="error_text">(erforderlich)</p>
                     <label class="label_to_hide" for="amount">Betrag</label>
                     <span id="plus_or_minus">-</span>
-                    <input required type="number" name="amount" id="amount">
+                    <input type="number" name="amount" id="amount">
                     <span>€</span>
                 </div>
-                <button class="button" type="submit"><img src="./img/icons8-speichern-80.png" alt="Diskette"></button>
+                <button onclick="event.preventDefault()" class="button" type="submit"><img src="./img/icons8-speichern-80.png" alt="Diskette"></button>
             </form>
         </div>
     </div>

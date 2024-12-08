@@ -48,6 +48,7 @@ async function showNextMonth(plusMinus1) {
 }
 
 function openMenuMore(id, e) {
+    e.stopPropagation();
     idToWork="";
     idToWork = id;
     document.getElementById(`show_more${id}`).style.width = "100%";
@@ -55,6 +56,17 @@ function openMenuMore(id, e) {
     document.getElementById(`show_more${id}`).style.opacity = "1";
     document.getElementById(`show_more_btn${id}`).style.width = "0px";
     document.getElementById(`show_more_btn${id}`).style.opacity = "0";
+    const allImages = document.querySelectorAll(".more img");
+    const allButtons = document.querySelectorAll(".more .button");
+
+// Iteriere über alle gefundenen <img>-Elemente und bearbeite sie
+allImages.forEach((img) => {
+    img.style.width = "24px"; // Beispiel: füge einen roten Rahmen hinzu
+    img.style.height = "24px"; // Ändere den Mauszeiger bei Hover
+});
+allButtons.forEach((button) => {
+    button.style.disabled = "none"
+})
 }
 
 function closeMenuMore(id) {
@@ -63,6 +75,16 @@ function closeMenuMore(id) {
     document.getElementById(`show_more${id}`).style.opacity = "0";
     document.getElementById(`show_more_btn${id}`).style.width = "30px";
     document.getElementById(`show_more_btn${id}`).style.opacity = "1";
+    const allImages = document.querySelectorAll(".more img");
+    const allButtons = document.querySelectorAll(".more .button");
+    // Iteriere über alle gefundenen <img>-Elemente und bearbeite sie
+    allImages.forEach((img) => {
+        img.style.width = "0px"; // Beispiel: füge einen roten Rahmen hinzu
+        img.style.height = "0px"; // Ändere den Mauszeiger bei Hover
+    });
+    allButtons.forEach((button) => {
+        button.style.disabled = "none"
+    })
 }
 
 function openForm() {
@@ -108,6 +130,38 @@ function checkTransactionToEdit(idToWork) {
     }
     document.querySelector(".button").addEventListener("onclick", deleteTransaction)
     return transaction
+}
+
+function isFormComplete(e) {
+    e.preventDefault();
+    checkTitle()
+    checkAmount()
+    formIsComplete()
+}
+
+function checkTitle() {
+    if (document.getElementById("error_title").value == "") {
+        document.getElementById("error_title").style.display = "flex";
+    } else {
+        document.getElementById("error_title").style.display = "none";
+    }
+}
+
+function checkAmount() {
+    if (document.getElementById("error_amount").value == "") {
+        document.getElementById("error_amount").style.display = "flex";
+    } else {
+        document.getElementById("error_amount").style.display = "none";
+    }
+}
+
+function formIsComplete() {
+    if (document.getElementById("error_title").value != "" &&
+        document.getElementById("error_amount").value != "") {
+        editOrNewTransaction()
+    } else {
+        return false
+    }
 }
 
 function editOrNewTransaction() {
@@ -210,18 +264,18 @@ function fillMonthHTML() {
                  </div>
                 <div class="single_pos_part_amount_more">
                     
-                    <div id="show_more${transactionsToShow[i].showMoreID}" class="more">
-                        <div class="edit button">
-                            <img onclick="editTransaction(transactionToEdit)" src="./img/icons8-bleistift-64.png" alt="Bleistift">
+                    <div onclick="event.stopPropagation()" id="show_more${transactionsToShow[i].showMoreID}" class="more">
+                        <div onclick="event.stopPropagation(); editTransaction(transactionToEdit)" class="edit button">
+                            <img onclick="event.stopPropagation(); editTransaction(transactionToEdit)" src="./img/icons8-bleistift-64.png" alt="Bleistift">
                         </div>
-                        <div class="delete button">
-                            <img onclick="deleteTransaction()" src="./img/icons8-müll-64.png" alt="Mülleimer">
+                        <div onclick="event.stopPropagation(); deleteTransaction()" class="delete button">
+                            <img onclick="event.stopPropagation(); deleteTransaction()" src="./img/icons8-müll-64.png" alt="Mülleimer">
                         </div>
-                        <div onclick="closeMenuMore(${transactionsToShow[i].showMoreID})" class="close_menu button">
-                            <img src="./img/icons8-ausgang-80.png" alt="Ausgang">
+                        <div onclick="event.stopPropagation(); closeMenuMore(${transactionsToShow[i].showMoreID})" class="close_menu button">
+                            <img onclick="event.stopPropagation(); closeMenuMore(${transactionsToShow[i].showMoreID})" src="./img/icons8-ausgang-80.png" alt="Ausgang">
                         </div>
                     </div>
-                    <span onclick="openMenuMore(${transactionsToShow[i].showMoreID}, event)" id="show_more_btn${transactionsToShow[i].showMoreID}" class="show_more button">&#x22EF;</span>
+                    <span onclick="event.stopPropagation(); openMenuMore(${transactionsToShow[i].showMoreID}, event)" id="show_more_btn${transactionsToShow[i].showMoreID}" class="show_more button">&#x22EF;</span>
                 </div>
             </div>
         `

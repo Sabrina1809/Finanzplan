@@ -84,7 +84,7 @@ body {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1) inset;
     /* background-color: rgb(243, 243, 243); */
     /* border-radius: 10px; */
-    width: 90%;
+    width: 100%;
     max-width: 700px;
     /* max-height: 800px; */
     height: 100%;
@@ -135,7 +135,9 @@ body {
                 width: 100%;
                 max-width: 600px;
                 /* max-height: 800px; */
-                height: calc(100vh - 200px);
+                height: calc(100vh - 200px);  /* Fallback */
+                height: calc(100dvh - 200px); /* Modern */
+                
                 margin: 20px auto 10px auto;
                 overflow-y: scroll;
                 padding: 0 10px 0 0;
@@ -277,7 +279,7 @@ body {
     background-color: rgb(243, 243, 243);
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1) inset;
     /* border-radius: 10px; */
-    width: 90%;
+    width: 100%;
     max-width: 700px;
     /* height: 600px; */
     height: 100%;
@@ -290,7 +292,8 @@ body {
         & form {
             max-width: 600px;
             margin: 10px auto 0 auto;
-            height: calc(100vh - 100px);
+            height: calc(100vh - 100px);  /* Fallback */
+            height: calc(100dvh - 100px); /* Modern */
             overflow: auto;
             padding-right: 10px;
         }
@@ -508,7 +511,7 @@ body {
         font-size: 12px;
     }
     .ctn {
-        width: 95%;
+        /* width: 95%; */
         & .month_overview {
             & .add_new_pos {
                 right: 10%;
@@ -561,7 +564,7 @@ body {
         display: none;
     }
     .overlay {
-        width: 95%;
+        /* width: 95%; */
         & .overlay_add_pos {
                 & h1 {
                     text-align: left;

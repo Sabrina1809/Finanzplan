@@ -232,6 +232,7 @@ body {
                     }
                 }
                 & .transfer {
+                    visibility: visible;
                     display: flex;
                     justify-content: space-between;
                     margin-bottom: 20px;
@@ -269,7 +270,86 @@ body {
                 justify-content: end;
                 align-items: center;
                 gap: 20px;
-                margin-right: 20%;
+                padding-right: 6.5%;
+                position: relative;
+                & .saldo_text {
+                    visibility: visible;
+                    padding: 5px 0;
+                }
+                & .info_button {
+                    position: absolute;
+                    left: 2.5%;
+                    z-index: 70;
+                    & img {
+                        width: 18px;
+                        height: 18px;
+                    }
+                }
+                & .info_overlay {
+                    position: absolute;
+                    left: 0;
+                    bottom: 0;
+                    z-index: 50;
+                    width: 0%;
+                    height: 0vh;
+                    padding: 50px 28px 28px 28px;
+                    background-color: rgb(243,243,243);
+                    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1) inset;
+                    border-radius: 10px;
+                    transition: all 0.2s ease-in-out;
+                    visibility: hidden;
+                    & .closeInfo {
+                        position: absolute;
+                        right: 3%;
+                        top: 3%;
+                        & img {
+                            display: none;
+                            width: 20px;
+                            height: 20px;
+                        }
+                    }
+                    & .info_content {
+                        position: absolute;
+                        text-align: left;
+                        overflow: auto;
+                        padding: 0 10px;
+                        bottom: 25px;
+                        left: 5%;
+                        right: 5%;
+                        top: 50px;
+                    }
+                    & h2 {
+                        margin: 15px 0 10px 0;
+                        text-transform: uppercase;
+                        font-weight: 500;
+                        border-top: 1px solid white;
+                        padding-top: 15px;
+                    }
+                    & h3 {
+                        margin: 8px 0 4px 0;
+                        font-weight: 500;
+                    }
+                    & li {
+                        list-style: disc;
+                        margin-left: 20px;
+                    }
+                    & .info_my_adress {
+                        margin: 20px 0;
+                    }
+                    & .info_footer {
+                        display: flex;
+                        gap: 10px;
+                        padding-right:10px;
+                        margin-bottom: 10px;
+                        border-top: 1px solid white;
+                        padding-top: 15px;
+                        & :first-child {
+                            padding-right: 10px;
+                            border-right: 1px solid black;
+                        }
+                    }
+                    
+                }
             }
         }
     }

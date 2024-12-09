@@ -24,7 +24,6 @@ async function showCurrentMonth() {
     document.getElementById("current_month").innerHTML = monthToShow + " / " + yearToShow;
     if (allTransactions.length == 0) {
         document.getElementById("pos_month").innerHTML = "Füge deine erste Transaktion mit dem + Button hinzu."
-        document.querySelector(".saldo_text").style.visibility  = "hidden";
     } else {
         fillMonthHTML()
         changeUebertrag()
@@ -251,7 +250,8 @@ function calc(plusOrMinusAbove, lastSum, lastAmount) {
 }
 
 function fillMonthHTML() {
-    document.getElementById("pos_month").innerHTML = "";    
+    document.getElementById("pos_month").innerHTML = "";   
+     
     for (let i = 0; i < transactionsToShow.length; i++) {
         let color = checkColor(i);
         document.getElementById("pos_month").innerHTML += `
@@ -317,4 +317,22 @@ function resetForm() {
     document.getElementById("title_input").value = "";
     document.getElementById("amount").value = "";
     document.getElementById("plus_or_minus").innerHTML = '-'
+}
+
+function openInfo() {
+    document.querySelector(".info_overlay").style.width = "90%";
+    document.querySelector(".info_overlay").style.height = "80vh";
+    document.querySelector(".info_overlay").style.visibility = "visible";
+    document.querySelector(".closeInfo img").style.display = "block";
+    document.querySelector(".info_button").style.zIndex = "0"
+
+}
+
+function closeInfo() {
+    document.querySelector(".info_overlay").style.width = "0%";
+    document.querySelector(".info_overlay").style.height = "0vh";
+    document.querySelector(".info_overlay").style.visibility = "hidden";
+    document.querySelector(".closeInfo img").style.display = "none";
+    document.querySelector(".info_button").style.zIndex = "70"
+
 }

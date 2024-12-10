@@ -87,11 +87,22 @@ function closeMenuMore(id) {
 }
 
 function openForm() {
-    document.getElementById("overview_ctn").style.display = "none";
-    document.getElementById("overlay_ctn").style.display = "block";
+    document.querySelector("#overview_ctn").style.backgroundColor = "rgb(236,236,236)";
+    document.querySelector(".month").style.visibility = "hidden";
+    document.querySelector(".overlay_add_pos").style.visibility = "visible";
+    document.querySelector(".overlay_add_pos").style.bottom = "60px";
+    document.querySelector(".overlay_add_pos").style.left = "7%";
     resetForm()
     prepareCalender();
-    document.getElementById("headline_form").innerHTML = "neue Position"
+    document.querySelector(".header_app").innerHTML = `
+    <div class="header_app_logo">
+         <img src="./img/icons8-münzen-50.png" alt="Münzen">
+        <h1>neue Position</h1>
+    </div>
+    <span onclick="closeForm()" class="close_info_btn button">
+        <img class="add_new_pos_img" src="./img/icons8-close-50.png" alt="Plus Zeichen">
+    </span>
+`
 }
 
 function prepareCalender() {
@@ -103,8 +114,20 @@ function prepareCalender() {
 
 function closeForm() {
     resetForm()
-    document.getElementById("overview_ctn").style.display = "block";
-    document.getElementById("overlay_ctn").style.display = "none";
+    document.querySelector("#overview_ctn").style.backgroundColor = "white";
+    document.querySelector(".month").style.visibility = "visible";
+    document.querySelector(".overlay_add_pos").style.visibility = "hidden";
+    document.querySelector(".overlay_add_pos").style.bottom = "100%";
+    document.querySelector(".overlay_add_pos").style.left = "100%";
+    document.querySelector(".header_app").innerHTML = `
+    <div class="header_app_logo">
+         <img src="./img/icons8-münzen-50.png" alt="Münzen">
+        <h1>Haushaltsbuch</h1>
+    </div>
+    <span onclick="openForm()" class="add_new_pos button">
+        <img class="add_new_pos_img" src="./img/icons8-plus-mathe-50.png" alt="Plus Zeichen">
+    </span>
+`
     transactionToEdit = "";
     return transactionToEdit;
 }
@@ -320,11 +343,12 @@ function resetForm() {
 }
 
 function openInfo() {
+    document.querySelector("#overview_ctn").style.backgroundColor = "rgb(253,252,243)";
     document.querySelector(".info_content").style.top = "100px";
     document.querySelector(".info_content").style.right = "7%";
     document.querySelector(".header_app").innerHTML = `
         <div class="header_app_logo">
-            <img src="./img/icons8-geld-48.png" alt="Münzen">
+             <img src="./img/icons8-münzen-50.png" alt="Münzen">
             <h1>Information</h1>
         </div>
         <span onclick="closeInfo()" class="close_info_btn button">
@@ -335,11 +359,12 @@ function openInfo() {
 }
 
 function closeInfo() {
+    document.querySelector("#overview_ctn").style.backgroundColor = "white";
     document.querySelector(".info_content").style.top = "100%";
     document.querySelector(".info_content").style.right = "100%";
     document.querySelector(".header_app").innerHTML = `
         <div class="header_app_logo">
-            <img src="./img/icons8-geld-48.png" alt="Münzen">
+             <img src="./img/icons8-münzen-50.png" alt="Münzen">
             <h1>Haushaltsbuch</h1>
         </div>
         <span onclick="openForm()" class="add_new_pos button">

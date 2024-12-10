@@ -2,12 +2,27 @@ let allTransactions;
 let allKeys = [];
 let id;
 let transactionsToShow = [];
-// let idToWork = "";
+let loadingScreenOption;
 
 async function init() {
+    await checkLoadingScreen();
+    await setLoadingElements();
     await getTransactionsFromStorage();
     await getIDFromStorage();
     showCurrentMonth()
+}
+
+async function checkLoadingScreen() {
+    let loadingScreenOptionStorage = JSON.parse(localStorage.getItem("loadingScreenFinanzplan")) || 0;
+    loadingScreenOption = loadingScreenOptionStorage;
+    console.log(loadingScreenOption);
+    return loadingScreenOption
+}
+
+async function saveAcceptButton() {
+    loadingScreenOption = 1;
+    console.log(loadingScreenOption);
+    localStorage.setItem("loadingScreenFinanzplan", JSON.stringify(loadingScreenOption));
 }
 
 async function setAndGetFromLocalStorage(allTransactions, id) {

@@ -9,7 +9,16 @@
 </head>
 <body onload="init()">
     <div class="loading_spinner_ctn">
-
+        <div class="loading_img_ctn">
+            <img class="loading_coins loading_coins_img" src="./img/icons8-münzen-100-w.png" alt="Münzen">
+            <!-- <img class="loading_coins loading_coins_gif" src="./img/icons8-münzen.gif" alt="Münzen"> -->
+        </div>
+        <div class="accept_button_descr_ctn">
+            <p class="loading_message">Diese App speichert Daten lokal auf Ihrem Gerät (localStorage). Ihre Daten werden nicht online geteilt. Mit der Nutzung der App stimmen Sie dieser Speicherung zu.</p>
+            <div onclick="saveAcceptButton()" class="button_accept">Verstanden!</div>
+            <p class="button_description">Nach Drücken des Buttons wird diese Meldung zukünftig nicht mehr erscheinen.</p>
+        </div>
+       <div class="loading_welcome_message">Welcome</div>
     </div>
     <div id="overview_ctn" class="ctn">
         <div class="month_overview">
@@ -237,5 +246,6 @@
     </div>
     <script src="./js/localStorage.js"></script>
     <script src="./script.js"></script>
+    <script src="./js/loadingSpinner.js"></script>
 </body>
 </html>

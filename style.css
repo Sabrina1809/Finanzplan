@@ -135,7 +135,6 @@ body {
             }
         }
         & .month {
-            margin-top: 20px;
             z-index: 60;
             position: absolute;
             display: block;
@@ -344,14 +343,15 @@ body {
             right: 100%;
             z-index: 70;
             overflow-y: auto;
+            & h2 {
+                margin: 15px 0 10px 0;
+                text-transform: uppercase;
+                font-weight: 500;
+                /* border-top: 1px solid white; */
+                /* padding-top: 15px; */
+            }
         }
-        & h2 {
-            margin: 15px 0 10px 0;
-            text-transform: uppercase;
-            font-weight: 500;
-            /* border-top: 1px solid white; */
-            /* padding-top: 15px; */
-        }
+       
         & h3 {
             margin: 8px 0 4px 0;
             font-weight: 500;

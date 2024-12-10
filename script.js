@@ -343,7 +343,8 @@ function resetForm() {
 }
 
 function openInfo() {
-    document.querySelector("#overview_ctn").style.backgroundColor = "rgb(253,252,243)";
+    document.querySelector("#overview_ctn").style.backgroundColor = "rgb(236, 236, 236)";
+    document.querySelector(".info_content").style.backgroundColor = "rgb(236, 236, 236)";
     document.querySelector(".info_content").style.top = "100px";
     document.querySelector(".info_content").style.right = "7%";
     document.querySelector(".header_app").innerHTML = `

@@ -29,7 +29,3 @@ function saveAcceptButton() {
     setTimeout(() => {document.querySelector(".loading_spinner_ctn").classList.add("animation_hide_loading_ctn")}, 3500)
     setTimeout(() => {document.querySelector(".loading_spinner_ctn").style.display = "none"}, 4400)
 }
-
-// function showWelcome() {
-//     document.querySelector(".loading_spinner_ctn").style.display = "none";
-// }

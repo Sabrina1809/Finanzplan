@@ -133,15 +133,26 @@ function closeForm() {
 }
 
 function editTransaction(transactionToEdit) {
-    document.getElementById("overview_ctn").style.display = "none";
-    document.getElementById("overlay_ctn").style.display = "block";
+    document.querySelector("#overview_ctn").style.backgroundColor = "rgb(236,236,236)";
+    document.querySelector(".month").style.visibility = "hidden";
+    document.querySelector(".overlay_add_pos").style.visibility = "visible";
+    document.querySelector(".overlay_add_pos").style.bottom = "60px";
+    document.querySelector(".overlay_add_pos").style.left = "7%";
     transactionToEdit = checkTransactionToEdit(idToWork);
     document.getElementById("date").value = `${transactionToEdit.year}-${transactionToEdit.month}-${transactionToEdit.day}`
     document.getElementById("type_option").value = transactionToEdit.type;
     document.getElementById("frequenzy_option").value = transactionToEdit.frequenzy;
     document.getElementById("title_input").value = transactionToEdit.title;
     document.getElementById("amount").value = transactionToEdit.amount;
-    document.getElementById("headline_form").innerHTML = "Position ändern"
+    document.querySelector(".header_app").innerHTML = `
+    <div class="header_app_logo">
+         <img src="./img/icons8-münzen-50.png" alt="Münzen">
+        <h1>Position ändern</h1>
+    </div>
+    <span onclick="closeForm()" class="close_info_btn button">
+        <img class="add_new_pos_img" src="./img/icons8-close-50.png" alt="Plus Zeichen">
+    </span>
+`
     return transactionToEdit;
 }
 

@@ -604,19 +604,6 @@ body {
     }
 }
 
-/* .overlay {
-    background-color: rgb(243, 243, 243);
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1) inset;
-    width: 100%;
-    max-width: 700px;
-    height: 100%;
-    margin: 20px auto;
-    padding: 30px;
-    position: relative;
-    display: none;
-  
-} */
-
 & .overlay_add_pos {
     position: absolute;
     background-color: rgb(236,236,236);
@@ -638,50 +625,6 @@ body {
         padding-right: 10px;
 
     }
-    /* & .header_form {
-        position: relative;
-        max-width: 600px;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        gap: 10px;
-        padding-bottom: 10px;
-        & .header_form_title_logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        & h1 {
-            font-weight: 500;
-            text-shadow: 0 0 2px rgba(97, 97, 97, 0.5);
-        }
-        & img {
-            width: 38px;
-            height: 38px;
-        }
-    } */
-    /* & .header_form::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        max-width: 600px;
-        height: 0.5px;
-        box-shadow: 0 0 2px rgba(0, 0, 0, 1);
-        background-color: rgba(0, 0, 0, 0.5);
-        pointer-events: none;
-    } */
-    /* & .closeForm {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        & .close_form_img {
-            width: 20px;
-            height: 20px;
-        }
-    } */
     & form {
         & .form_section {
             margin: 10px auto 15px auto;

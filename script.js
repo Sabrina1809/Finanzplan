@@ -5,7 +5,7 @@ let currentMonth = new Date().getMonth() + 1;
 let currentYear = new Date().getFullYear();
 let monthToShow = Number(currentMonth);
 let yearToShow = Number(currentYear);
-let uebertragLastMonth;
+let uebertragLastMonth = 0;
 
 async function changeUebertrag() {
     if(toggleButton.classList.contains("active")) {
@@ -13,9 +13,11 @@ async function changeUebertrag() {
         document.getElementById("transfer_amount_input").value = 0;
     } else {
         document.getElementById("transfer_amount_input").disabled = false;
+        uebertragLastMonth = 0;
     }
-    fillMonthHTML()
-    calcMoney()
+    fillMonthHTML();
+    calcMoney();
+    return uebertragLastMonth;
 }
 
 async function showCurrentMonth() {
@@ -242,15 +244,22 @@ function checkplusMinus() {
 }
 
 function calcMoney() {
-    calcPosOne();
-    for (let i = 1; i < transactionsToShow.length; i++) {
-        calcOtherPos(i);
+    console.log(transactionsToShow);
+    if (transactionsToShow.length == 0) {
+        uebertragLastMonth = document.getElementById("transfer_amount_input").value;
+        document.getElementById(`saldo_amount`).innerHTML = Number(uebertragLastMonth) + " €";
+    } else {
+        calcPosOne();
+        for (let i = 1; i < transactionsToShow.length; i++) {
+            calcOtherPos(i);
+        }
+        calcLastPos();
     }
-    calcLastPos();
+  
 }
 
 function calcPosOne() {
-    let uebertragLastMonth = document.getElementById("transfer_amount_input").value;
+    uebertragLastMonth = document.getElementById("transfer_amount_input").value;
     let idFromIndexOne = transactionsToShow[0].showMoreID;
     document.getElementById(`current_sum${idFromIndexOne}`).innerHTML = Number(uebertragLastMonth) + " €";
 }
@@ -264,13 +273,13 @@ function calcOtherPos(i) {
 }
 
 function calcLastPos() {
-    uebertragLastMonth = 0;
+    // uebertragLastMonth = 0;
     let plusOrMinusAbove = transactionsToShow[transactionsToShow.length-1].plusMinus;
     let lastAmount = Number(transactionsToShow[transactionsToShow.length-1].amount);
     let lastSum = (document.getElementById(`current_sum${transactionsToShow[transactionsToShow.length-1].showMoreID}`).innerHTML).slice(0, -2)
     let newSum = calc(plusOrMinusAbove, lastSum, lastAmount); 
     document.getElementById(`saldo_amount`).innerHTML = Number(newSum) + " €";
-    return uebertragLastMonth = newSum;
+    // return uebertragLastMonth = newSum;
 }
 
 function calc(plusOrMinusAbove, lastSum, lastAmount) {

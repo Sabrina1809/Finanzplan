@@ -320,19 +320,31 @@ function resetForm() {
 }
 
 function openInfo() {
-    document.querySelector(".info_overlay").style.width = "90%";
-    document.querySelector(".info_overlay").style.height = "80vh";
-    document.querySelector(".info_overlay").style.visibility = "visible";
-    document.querySelector(".closeInfo img").style.display = "block";
-    document.querySelector(".info_button").style.zIndex = "0"
-
+    document.querySelector(".info_content").style.top = "100px";
+    document.querySelector(".info_content").style.right = "7%";
+    document.querySelector(".header_app").innerHTML = `
+        <div class="header_app_logo">
+            <img src="./img/icons8-geld-48.png" alt="Münzen">
+            <h1>Information</h1>
+        </div>
+        <span onclick="closeInfo()" class="close_info_btn button">
+            <img class="add_new_pos_img" src="./img/icons8-close-50.png" alt="Plus Zeichen">
+        </span>
+    `
+    document.querySelector(".month").style.visibility = "hidden";
 }
 
 function closeInfo() {
-    document.querySelector(".info_overlay").style.width = "0%";
-    document.querySelector(".info_overlay").style.height = "0vh";
-    document.querySelector(".info_overlay").style.visibility = "hidden";
-    document.querySelector(".closeInfo img").style.display = "none";
-    document.querySelector(".info_button").style.zIndex = "70"
-
+    document.querySelector(".info_content").style.top = "100%";
+    document.querySelector(".info_content").style.right = "100%";
+    document.querySelector(".header_app").innerHTML = `
+        <div class="header_app_logo">
+            <img src="./img/icons8-geld-48.png" alt="Münzen">
+            <h1>Haushaltsbuch</h1>
+        </div>
+        <span onclick="openForm()" class="add_new_pos button">
+            <img class="add_new_pos_img" src="./img/icons8-plus-mathe-50.png" alt="Plus Zeichen">
+        </span>
+    `
+    document.querySelector(".month").style.visibility = "visible";
 }

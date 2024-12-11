@@ -5,7 +5,7 @@ let currentMonth = new Date().getMonth() + 1;
 let currentYear = new Date().getFullYear();
 let monthToShow = Number(currentMonth);
 let yearToShow = Number(currentYear);
-let uebertragLastMonth;
+let uebertragLastMonth = 0;
 
 async function changeUebertrag() {
     if(toggleButton.classList.contains("active")) {
@@ -13,9 +13,11 @@ async function changeUebertrag() {
         document.getElementById("transfer_amount_input").value = 0;
     } else {
         document.getElementById("transfer_amount_input").disabled = false;
+        uebertragLastMonth = 0;
     }
-    fillMonthHTML()
-    calcMoney()
+    fillMonthHTML();
+    calcMoney();
+    return uebertragLastMonth;
 }
 
 async function showCurrentMonth() {
@@ -87,11 +89,24 @@ function closeMenuMore(id) {
 }
 
 function openForm() {
-    document.getElementById("overview_ctn").style.display = "none";
-    document.getElementById("overlay_ctn").style.display = "block";
+    document.querySelector("#error_title").style.display = "none";
+    document.querySelector("#error_amount").style.display = "none";
+    document.querySelector("#overview_ctn").style.backgroundColor = "rgb(236,236,236)";
+    document.querySelector(".month").style.visibility = "hidden";
+    document.querySelector(".overlay_add_pos").style.visibility = "visible";
+    document.querySelector(".overlay_add_pos").style.bottom = "60px";
+    document.querySelector(".overlay_add_pos").style.left = "7%";
     resetForm()
     prepareCalender();
-    document.getElementById("headline_form").innerHTML = "neue Position"
+    document.querySelector(".header_app").innerHTML = `
+    <div class="header_app_logo">
+         <img src="./img/icons8-münzen-50.png" alt="Münzen">
+        <h1>neue Position</h1>
+    </div>
+    <span onclick="closeForm()" class="close_info_btn button">
+        <img class="add_new_pos_img" src="./img/icons8-close-50.png" alt="Plus Zeichen">
+    </span>
+`
 }
 
 function prepareCalender() {
@@ -103,22 +118,48 @@ function prepareCalender() {
 
 function closeForm() {
     resetForm()
-    document.getElementById("overview_ctn").style.display = "block";
-    document.getElementById("overlay_ctn").style.display = "none";
+    document.querySelector("#overview_ctn").style.backgroundColor = "white";
+    document.querySelector(".month").style.visibility = "visible";
+    document.querySelector(".overlay_add_pos").style.visibility = "hidden";
+    document.querySelector(".overlay_add_pos").style.bottom = "100%";
+    document.querySelector(".overlay_add_pos").style.left = "100%";
+    document.querySelector(".header_app").innerHTML = `
+    <div class="header_app_logo">
+         <img src="./img/icons8-münzen-50.png" alt="Münzen">
+        <h1>Haushaltsbuch</h1>
+    </div>
+    <span onclick="openForm()" class="add_new_pos button">
+        <img class="add_new_pos_img" src="./img/icons8-plus-mathe-50.png" alt="Plus Zeichen">
+    </span>
+`
     transactionToEdit = "";
     return transactionToEdit;
 }
 
 function editTransaction(transactionToEdit) {
-    document.getElementById("overview_ctn").style.display = "none";
-    document.getElementById("overlay_ctn").style.display = "block";
+    document.querySelector("#overview_ctn").style.backgroundColor = "rgb(236,236,236)";
+    document.querySelector(".month").style.visibility = "hidden";
+    document.querySelector(".overlay_add_pos").style.visibility = "visible";
+    document.querySelector(".overlay_add_pos").style.bottom = "60px";
+    document.querySelector(".overlay_add_pos").style.left = "7%";
     transactionToEdit = checkTransactionToEdit(idToWork);
     document.getElementById("date").value = `${transactionToEdit.year}-${transactionToEdit.month}-${transactionToEdit.day}`
     document.getElementById("type_option").value = transactionToEdit.type;
     document.getElementById("frequenzy_option").value = transactionToEdit.frequenzy;
     document.getElementById("title_input").value = transactionToEdit.title;
+    document.getElementById("plus_or_minus").innerHTML = transactionToEdit.plusMinus;
     document.getElementById("amount").value = transactionToEdit.amount;
-    document.getElementById("headline_form").innerHTML = "Position ändern"
+    document.querySelector(".header_app").innerHTML = `
+    <div class="header_app_logo">
+         <img src="./img/icons8-münzen-50.png" alt="Münzen">
+        <h1>Position ändern</h1>
+    </div>
+    <span onclick="closeForm()" class="close_info_btn button">
+        <img class="add_new_pos_img" src="./img/icons8-close-50.png" alt="Plus Zeichen">
+    </span>
+`
+    document.querySelector("#error_title").style.display = "none";
+    document.querySelector("#error_amount").style.display = "none";
     return transactionToEdit;
 }
 
@@ -208,15 +249,22 @@ function checkplusMinus() {
 }
 
 function calcMoney() {
-    calcPosOne();
-    for (let i = 1; i < transactionsToShow.length; i++) {
-        calcOtherPos(i);
+    console.log(transactionsToShow);
+    if (transactionsToShow.length == 0) {
+        uebertragLastMonth = document.getElementById("transfer_amount_input").value;
+        document.getElementById(`saldo_amount`).innerHTML = Number(uebertragLastMonth) + " €";
+    } else {
+        calcPosOne();
+        for (let i = 1; i < transactionsToShow.length; i++) {
+            calcOtherPos(i);
+        }
+        calcLastPos();
     }
-    calcLastPos();
+  
 }
 
 function calcPosOne() {
-    let uebertragLastMonth = document.getElementById("transfer_amount_input").value;
+    uebertragLastMonth = document.getElementById("transfer_amount_input").value;
     let idFromIndexOne = transactionsToShow[0].showMoreID;
     document.getElementById(`current_sum${idFromIndexOne}`).innerHTML = Number(uebertragLastMonth) + " €";
 }
@@ -230,13 +278,13 @@ function calcOtherPos(i) {
 }
 
 function calcLastPos() {
-    uebertragLastMonth = 0;
+    // uebertragLastMonth = 0;
     let plusOrMinusAbove = transactionsToShow[transactionsToShow.length-1].plusMinus;
     let lastAmount = Number(transactionsToShow[transactionsToShow.length-1].amount);
     let lastSum = (document.getElementById(`current_sum${transactionsToShow[transactionsToShow.length-1].showMoreID}`).innerHTML).slice(0, -2)
     let newSum = calc(plusOrMinusAbove, lastSum, lastAmount); 
     document.getElementById(`saldo_amount`).innerHTML = Number(newSum) + " €";
-    return uebertragLastMonth = newSum;
+    // return uebertragLastMonth = newSum;
 }
 
 function calc(plusOrMinusAbove, lastSum, lastAmount) {
@@ -320,11 +368,13 @@ function resetForm() {
 }
 
 function openInfo() {
+    document.querySelector("#overview_ctn").style.backgroundColor = "rgb(236, 236, 236)";
+    document.querySelector(".info_content").style.backgroundColor = "rgb(236, 236, 236)";
     document.querySelector(".info_content").style.top = "100px";
     document.querySelector(".info_content").style.right = "7%";
     document.querySelector(".header_app").innerHTML = `
         <div class="header_app_logo">
-            <img src="./img/icons8-geld-48.png" alt="Münzen">
+             <img src="./img/icons8-münzen-50.png" alt="Münzen">
             <h1>Information</h1>
         </div>
         <span onclick="closeInfo()" class="close_info_btn button">
@@ -335,11 +385,12 @@ function openInfo() {
 }
 
 function closeInfo() {
+    document.querySelector("#overview_ctn").style.backgroundColor = "white";
     document.querySelector(".info_content").style.top = "100%";
     document.querySelector(".info_content").style.right = "100%";
     document.querySelector(".header_app").innerHTML = `
         <div class="header_app_logo">
-            <img src="./img/icons8-geld-48.png" alt="Münzen">
+             <img src="./img/icons8-münzen-50.png" alt="Münzen">
             <h1>Haushaltsbuch</h1>
         </div>
         <span onclick="openForm()" class="add_new_pos button">

@@ -3,16 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="./img/icons8-geld-48.png" type="image/x-icon">
+    <link rel="shortcut icon" href="./img/icons8-münzen-50.png" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
     <title>Haushaltsbuch</title>
 </head>
 <body onload="init()">
+    <div class="loading_spinner_ctn">
+        <div class="loading_img_ctn">
+            <img class="loading_coins loading_coins_img" src="./img/icons8-münzen-100-w.png" alt="Münzen">
+            <!-- <img class="loading_coins loading_coins_gif" src="./img/icons8-münzen.gif" alt="Münzen"> -->
+        </div>
+        <div class="accept_button_descr_ctn">
+            <p class="loading_message">Diese App speichert Daten lokal auf Ihrem Gerät (localStorage). Ihre Daten werden nicht online geteilt. Mit der Nutzung der App stimmen Sie dieser Speicherung zu.</p>
+            <div onclick="saveAcceptButton()" class="button_accept">Verstanden!</div>
+            <p class="button_description">Nach Drücken des Buttons wird diese Meldung zukünftig nicht mehr erscheinen.</p>
+        </div>
+       <div class="loading_welcome_message">Welcome</div>
+    </div>
     <div id="overview_ctn" class="ctn">
         <div class="month_overview">
             <div class="header_app">
                 <div class="header_app_logo">
-                    <img src="./img/icons8-geld-48.png" alt="Münzen">
+                    <img src="./img/icons8-münzen-50.png" alt="Münzen">
                     <h1>Haushaltsbuch</h1>
                 </div>
                 <span onclick="openForm()" class="add_new_pos button">
@@ -38,7 +50,7 @@
                             </div>
                         </div>
                         <div class="transfer_amount_input">
-                            <input onkeydown="if(event.key === 'Enter') calcMoney()" type="number" name="transfer_amount_input" id="transfer_amount_input" value="0">
+                            <input disabled onkeydown="if(event.key === 'Enter') calcMoney()" type="number" name="transfer_amount_input" id="transfer_amount_input" value="0">
                             <span id="transfer_amount" class="transfer_amount"> €</span>
                         </div>
                     </div>
@@ -121,7 +133,7 @@
                       
                     </div> -->
                     <span id="saldo_text" class="saldo_text">Saldo</span>
-                    <span id="saldo_amount" class="saldo_amount"></span>
+                    <span id="saldo_amount" class="saldo_amount"> 0 €</span>
                 </div>
             </div>
             <div class="info_content">
@@ -185,65 +197,55 @@
                 </div>
                 <div class="info_footer">
                     <div class="info_icon">
-                        Icons by Icons8
+                        Icons by <a href="https://icons8.de/">Icons8</a>
                     </div>
                     <div>
                         © Sabrina Fritz 2024
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div id="overlay_ctn" class="overlay">
-        <div class="overlay_add_pos">
-            <div class="header_form">
-                <div class="header_form_title_logo">
-                    <img src="./img/icons8-geld-48.png" alt="Münzen">
-                    <h1 id="headline_form">neue Position</h1>
-                </div>
-                <span onclick="closeForm()" class="closeForm button">
-                    <img class="close_form_img" src="./img/icons8-close-50.png" alt="close Button">
-                </span>
+            <div class="overlay_add_pos">
+                <form onsubmit="event.preventDefault(); isFormComplete(event, transactionToEdit)" action="">
+                    <div class="type form_section">
+                        <h2>Typ</h2>
+                        <select id="type_option" onchange="changeTypeOfTransaktion(this.value)">
+                            <option id="type_ausgabe" value="Ausgabe">Ausgabe</option>
+                            <option id="type_einnahme" value="Einnahme">Einnahme</option>
+                        </select>
+                    </div>
+                    <div class="frequenzy form_section">
+                        <h2>Häufigkeit</h2>
+                        <select id="frequenzy_option">
+                            <option id="freq_one_time" onclick="changeFrequenzy('einmalig')" value="einmalig">einmalig</option>
+                            <option id="freq_monthly" onclick="changeFrequenzy('monatlilch')" value="monatlich">monatlich</option>
+                        </select>
+                    </div>
+                    <div class="input_title_pos form_section">
+                        <h2>Titel</h2>
+                        <p id="error_title" class="error_text">(erforderlich)</p>
+                        <label class="label_to_hide" for="title_input">Titel</label>
+                        <input type="text" name="title_input" id="title_input">
+                    </div>
+                    <div class="date form_section">
+                        <h2>Datum</h2>
+                        <label class="label_to_hide" for="date">Datum</label>
+                        <input required type="date" id="date" name="date">
+                    </div>
+                    <div class="input_amount form_section">
+                        <h2>Betrag</h2>
+                        <p id="error_amount" class="error_text">(erforderlich)</p>
+                        <label class="label_to_hide" for="amount">Betrag</label>
+                        <span id="plus_or_minus">-</span>
+                        <input type="number" name="amount" id="amount">
+                        <span>€</span>
+                    </div>
+                    <button onclick="" class="button" type="submit"><img src="./img/icons8-speichern-80.png" alt="Diskette"></button>
+                </form>
             </div>
-            <form onsubmit="event.preventDefault(); isFormComplete(event, transactionToEdit)" action="">
-                <div class="type form_section">
-                    <h2>Typ</h2>
-                    <select id="type_option" onchange="changeTypeOfTransaktion(this.value)">
-                        <option id="type_ausgabe" value="Ausgabe">Ausgabe</option>
-                        <option id="type_einnahme" value="Einnahme">Einnahme</option>
-                    </select>
-                </div>
-                <div class="frequenzy form_section">
-                    <h2>Häufigkeit</h2>
-                    <select id="frequenzy_option">
-                        <option id="freq_one_time" onclick="changeFrequenzy('einmalig')" value="einmalig">einmalig</option>
-                        <option id="freq_monthly" onclick="changeFrequenzy('monatlilch')" value="monatlich">monatlich</option>
-                    </select>
-                </div>
-                <div class="input_title_pos form_section">
-                    <h2>Titel</h2>
-                    <p id="error_title" class="error_text">(erforderlich)</p>
-                    <label class="label_to_hide" for="title_input">Titel</label>
-                    <input type="text" name="title_input" id="title_input">
-                </div>
-                <div class="date form_section">
-                    <h2>Datum</h2>
-                    <label class="label_to_hide" for="date">Datum</label>
-                    <input required type="date" id="date" name="date">
-                </div>
-                <div class="input_amount form_section">
-                    <h2>Betrag</h2>
-                    <p id="error_amount" class="error_text">(erforderlich)</p>
-                    <label class="label_to_hide" for="amount">Betrag</label>
-                    <span id="plus_or_minus">-</span>
-                    <input type="number" name="amount" id="amount">
-                    <span>€</span>
-                </div>
-                <button onclick="" class="button" type="submit"><img src="./img/icons8-speichern-80.png" alt="Diskette"></button>
-            </form>
         </div>
     </div>
     <script src="./js/localStorage.js"></script>
     <script src="./script.js"></script>
+    <script src="./js/loadingSpinner.js"></script>
 </body>
 </html>

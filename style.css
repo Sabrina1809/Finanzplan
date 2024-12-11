@@ -396,6 +396,7 @@ body {
                     & .single_pos_part_day_title {
                         display: flex;
                         justify-content: space-between;
+                        align-items: center;
                     }
                     & .day {
                         border-radius: 5px;
@@ -874,7 +875,7 @@ body {
     }
 }
 
-@media(max-width: 450px) {
+@media(max-width: 370px) {
     .ctn {
         & .month_overview {
             & .month {
@@ -895,6 +896,7 @@ body {
                         & .title {
                             width: 133px;
                             margin-top: 5px;
+                            margin-left: 40px;
                         }
                     }
                 }
@@ -903,7 +905,7 @@ body {
     }
 }
 
-@media(max-width: 350px) {
+/* @media(max-width: 350px) {
     .ctn {
         & .month_overview {
             & .month {
@@ -917,4 +919,4 @@ body {
             }
         }
     }
-}
+} */

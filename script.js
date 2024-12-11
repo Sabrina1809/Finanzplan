@@ -89,6 +89,8 @@ function closeMenuMore(id) {
 }
 
 function openForm() {
+    document.querySelector("#error_title").style.display = "none";
+    document.querySelector("#error_amount").style.display = "none";
     document.querySelector("#overview_ctn").style.backgroundColor = "rgb(236,236,236)";
     document.querySelector(".month").style.visibility = "hidden";
     document.querySelector(".overlay_add_pos").style.visibility = "visible";
@@ -155,6 +157,8 @@ function editTransaction(transactionToEdit) {
         <img class="add_new_pos_img" src="./img/icons8-close-50.png" alt="Plus Zeichen">
     </span>
 `
+    document.querySelector("#error_title").style.display = "none";
+    document.querySelector("#error_amount").style.display = "none";
     return transactionToEdit;
 }
 

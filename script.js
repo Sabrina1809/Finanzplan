@@ -147,6 +147,7 @@ function editTransaction(transactionToEdit) {
     document.getElementById("type_option").value = transactionToEdit.type;
     document.getElementById("frequenzy_option").value = transactionToEdit.frequenzy;
     document.getElementById("title_input").value = transactionToEdit.title;
+    document.getElementById("plus_or_minus").innerHTML = transactionToEdit.plusMinus;
     document.getElementById("amount").value = transactionToEdit.amount;
     document.querySelector(".header_app").innerHTML = `
     <div class="header_app_logo">
